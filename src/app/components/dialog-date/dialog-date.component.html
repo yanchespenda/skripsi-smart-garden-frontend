@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>Change date</h1>
+<div mat-dialog-content class="dialogContent">
+    <form [formGroup]="actionForm">
+        <div>
+            <mat-form-field class="fullSize inputMargin" appearance="outline">
+                <mat-label>Date Type</mat-label>
+                <mat-select formControlName="currentDate" aria-label="Date Type" required>
+                    <mat-option>-- None --</mat-option>
+                    <mat-option *ngFor="let itemX of dateFormatSelect" [value]="itemX.value">
+                        {{ itemX.viewValue }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="actionForm.invalid">Required</mat-error>
+            </mat-form-field>
+        </div>
+    </form>
+</div>
+<div mat-dialog-actions>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button (click)="onConfirm()">Save</button>
+</div>

@@ -7,10 +7,19 @@ import {
   LinearScale,
   PointElement,
   LineElement,
-  Tooltip
+  Tooltip,
+  Legend
 } from 'chart.js';
 
-Chart.register(LineController, CategoryScale, LinearScale, PointElement, LineElement, Tooltip);
+Chart.register(
+  LineController,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Legend
+);
 
 @Component({
   selector: 'app-chart',

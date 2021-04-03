@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CardData, ChartJsFormat, UniversalSelect } from 'src/app/interfaces';
 import { ChartComponent } from '@component/chart/chart.component';
 import { MatDialog } from '@angular/material/dialog';
@@ -12,7 +12,7 @@ import { interval, Subscription } from 'rxjs';
   templateUrl: './card.component.html',
   styleUrls: ['./card.component.scss']
 })
-export class CardComponent implements OnInit {
+export class CardComponent implements OnInit, OnDestroy {
 
   @ViewChild('chartContainer') chartContainer: ChartComponent;
   @Input() cardData: CardData;
@@ -58,6 +58,7 @@ export class CardComponent implements OnInit {
   };
 
   currentDate = 1;
+  localStorageName: string;
   dateFormatSelect: UniversalSelect[] = [
     {
       value: 1,
@@ -105,6 +106,7 @@ export class CardComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.currentDate = result;
+        localStorage.setItem(this.localStorageName, this.currentDate.toString());
         this.initData();
       }
     });
@@ -125,7 +127,7 @@ export class CardComponent implements OnInit {
           } else if (this.currentDate === 2 ) {
             return parse.toFormat('HH:mm');
           } else if (this.currentDate === 3 ) {
-            return parse.toFormat('HH');
+            return parse.toFormat('HH:mm');
           } else if (this.currentDate === 4 ) {
             return parse.toLocaleString(DateTime.DATE_SHORT);
           } else if (this.currentDate === 5) {
@@ -155,7 +157,27 @@ export class CardComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.localStorageName = `config-card-${this.cardData.callbackId}`;
+
+    const getLocalStorage = localStorage.getItem(this.localStorageName);
+    if (getLocalStorage) {
+      try {
+        this.currentDate = Number(getLocalStorage);
+      } catch (error) {
+        this.currentDate = 1;
+      }
+    } else {
+      localStorage.setItem(this.localStorageName, this.currentDate.toString());
+    }
     this.initData();
+
+    this.refreshInterval = this.refreshIntervalCounter.subscribe(res => {
+      this.initData();
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroyInterval();
   }
 
 }

@@ -3,5 +3,5 @@ export const environment = {
 
   REQUEST_CREDENTIALS: true,
 
-  baseUrl: 'http://api.skripsi.arproject.web.id/',
+  baseUrl: 'https://api.skripsi.arproject.web.id/',
 };

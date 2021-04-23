@@ -26,6 +26,7 @@
     "@angular/service-worker": "~11.2.4",
     "chart.js": "^3.0.0-beta.12",
     "luxon": "^1.26.0",
+    "ng-connection-service": "^1.0.4",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.3"

@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-  <span>Smart Garden</span>
+  <span>Smart Garden{{ !isConnected ? ' [Offline]' : '' }}</span>
   <span fxFlex></span>
   <button mat-icon-button aria-label="Flush">
     <mat-icon>grass</mat-icon>
@@ -12,7 +12,7 @@
 <div>
   <div class="grid-container">
     <ng-container *ngFor="let cardContainer of cards">
-      <h1 class="mat-h1">{{ cardContainer.title }}</h1>
+      <h1 class="mat-h1 tittlePadding">{{ cardContainer.title }}</h1>
       <mat-grid-list cols="2" rowHeight="400px">
         <mat-grid-tile *ngFor="let card of cardContainer.cards" [colspan]="card.cols" [rowspan]="card.rows">
           <app-card [cardData]="card"></app-card>

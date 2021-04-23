@@ -6,6 +6,7 @@ import { DialogDateComponent } from '@component/dialog-date/dialog-date.componen
 import { AppService } from 'src/app/app.service';
 import { DateTime } from 'luxon';
 import { interval, Subscription } from 'rxjs';
+import { ConnectionService } from 'ng-connection-service';
 
 @Component({
   selector: 'app-card',
@@ -16,6 +17,9 @@ export class CardComponent implements OnInit, OnDestroy {
 
   @ViewChild('chartContainer') chartContainer: ChartComponent;
   @Input() cardData: CardData;
+
+  isConnected = true;
+  isOfflineData = false;
 
   refreshIntervalCounter = interval(30 * 1000);
   refreshInterval: Subscription;
@@ -59,6 +63,7 @@ export class CardComponent implements OnInit, OnDestroy {
 
   currentDate = 1;
   localStorageName: string;
+  localStorageNameOffline: string;
   dateFormatSelect: UniversalSelect[] = [
     {
       value: 1,
@@ -91,9 +96,13 @@ export class CardComponent implements OnInit, OnDestroy {
 
   constructor(
     private matDialog: MatDialog,
-
+    private connectionService: ConnectionService,
     private appService: AppService,
-  ) { }
+  ) {
+    this.connectionService.monitor().subscribe(isConnected => {
+      this.isConnected = isConnected;
+    });
+  }
 
   actionDateChange(): void {
     const dialogRef = this.matDialog.open(DialogDateComponent, {
@@ -116,37 +125,59 @@ export class CardComponent implements OnInit, OnDestroy {
     this.initData();
   }
 
+  manageData(res: ChartJsFormat): void {
+    this.data = {
+      labels: res.labels.map(item => {
+        const parse = DateTime.fromISO(item);
+        if (this.currentDate === 1) {
+          return parse.toLocaleString(DateTime.TIME_24_WITH_SECONDS);
+        } else if (this.currentDate === 2 ) {
+          return parse.toFormat('HH:mm');
+        } else if (this.currentDate === 3 ) {
+          return parse.toFormat('HH:mm');
+        } else if (this.currentDate === 4 ) {
+          return parse.toLocaleString(DateTime.DATE_SHORT);
+        } else if (this.currentDate === 5) {
+          return parse.toFormat('LLLL kkkk');
+        }
+        return DateTime.fromISO(item).toLocaleString(DateTime.DATETIME_FULL);
+      }).reverse(),
+      datasets: res.datasets.map((item, index) => {
+        return {
+          label: item.label,
+          data: item.data.reverse(),
+          backgroundColor: this.lineColor[index],
+          borderColor: this.lineColor[index],
+          fill: false
+        };
+      })
+    };
+
+    this.lastUpdate = res.lastUpdate ? DateTime.fromISO(res.lastUpdate).toFormat('LLL dd, yyyy HH:mm:ss') : null;
+  }
+
+  initOffline(): void {
+    const getLocalStorage = localStorage.getItem(this.localStorageNameOffline);
+    if (getLocalStorage) {
+      try {
+        const parseData = JSON.parse(getLocalStorage);
+        if (parseData) {
+          this.isOfflineData = true;
+          this.manageData(parseData);
+        }
+      } catch (error) { }
+    }
+  }
+
   initData(): void {
+    if (!this.isConnected) {
+      this.initOffline();
+      return;
+    }
     // tslint:disable-next-line: deprecation
     this.appService.getSensor(this.cardData.idService, this.currentDate).subscribe(res => {
-      this.data = {
-        labels: res.labels.map(item => {
-          const parse = DateTime.fromISO(item);
-          if (this.currentDate === 1) {
-            return parse.toLocaleString(DateTime.TIME_24_WITH_SECONDS);
-          } else if (this.currentDate === 2 ) {
-            return parse.toFormat('HH:mm');
-          } else if (this.currentDate === 3 ) {
-            return parse.toFormat('HH:mm');
-          } else if (this.currentDate === 4 ) {
-            return parse.toLocaleString(DateTime.DATE_SHORT);
-          } else if (this.currentDate === 5) {
-            return parse.toFormat('LLLL kkkk');
-          }
-          return DateTime.fromISO(item).toLocaleString(DateTime.DATETIME_FULL);
-        }).reverse(),
-        datasets: res.datasets.map((item, index) => {
-          return {
-            label: item.label,
-            data: item.data.reverse(),
-            backgroundColor: this.lineColor[index],
-            borderColor: this.lineColor[index],
-            fill: false
-          };
-        })
-      };
-
-      this.lastUpdate = res.lastUpdate ? DateTime.fromISO(res.lastUpdate).toFormat('LLL dd, yyyy HH:mm:ss') : null;
+      this.manageData(res);
+      localStorage.setItem(this.localStorageNameOffline, JSON.stringify(res).toString());
     });
   }
 
@@ -158,6 +189,7 @@ export class CardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.localStorageName = `config-card-${this.cardData.callbackId}`;
+    this.localStorageNameOffline = `offline-card-${this.cardData.callbackId}`;
 
     const getLocalStorage = localStorage.getItem(this.localStorageName);
     if (getLocalStorage) {

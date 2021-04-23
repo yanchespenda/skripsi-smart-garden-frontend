@@ -1,7 +1,7 @@
 <mat-card class="dashboard-card">
   <mat-card-header>
     <mat-card-title>
-      <mat-card-title>{{ cardData.title }}</mat-card-title>
+      <mat-card-title>{{ cardData.title }}{{ isOfflineData ? ' [Offline data]' : '' }}</mat-card-title>
       <mat-card-subtitle *ngIf="lastUpdate">Last update: {{ lastUpdate }}</mat-card-subtitle>
       <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
         <mat-icon>more_vert</mat-icon>

@@ -28,6 +28,8 @@ import { SigninComponent } from './components/signin/signin.component';
 import { DialogPinComponent } from './components/dialog-pin/dialog-pin.component';
 import { HttpInterceptorsService } from './services/http-interceptors.service';
 
+import { ConnectionServiceModule } from 'ng-connection-service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,6 +48,7 @@ import { HttpInterceptorsService } from './services/http-interceptors.service';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    ConnectionServiceModule,
 
     MatToolbarModule,
     MatIconModule,

@@ -189,7 +189,7 @@ export class CardComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.localStorageName = `config-card-${this.cardData.callbackId}`;
-    this.localStorageNameOffline = `offline-card-${this.cardData.callbackId}`;
+    this.localStorageNameOffline = `offline-card-${this.cardData.callbackId}-${this.currentDate}`;
 
     const getLocalStorage = localStorage.getItem(this.localStorageName);
     if (getLocalStorage) {

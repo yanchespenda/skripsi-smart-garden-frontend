@@ -61,12 +61,10 @@ import { ConnectionServiceModule } from 'ng-connection-service';
     MatFormFieldModule,
 
     LayoutModule,
-     ServiceWorkerModule.register('ngsw-worker.js', {
-       enabled: environment.production,
-       // Register the ServiceWorker as soon as the app is stable
-       // or after 30 seconds (whichever comes first).
-       registrationStrategy: 'registerWhenStable:30000'
-     }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      registrationStrategy: 'registerWhenStable:10000'
+    }),
   ],
   providers: [
     {

@@ -62,8 +62,7 @@ import { ConnectionServiceModule } from 'ng-connection-service';
 
     LayoutModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production,
-      registrationStrategy: 'registerWhenStable:10000'
+      enabled: environment.production
     }),
   ],
   providers: [

@@ -1,6 +1,6 @@
-import {
-  BreakpointObserver
-} from '@angular/cdk/layout';
+// import {
+//   BreakpointObserver
+// } from '@angular/cdk/layout';
 import {
   Component
 } from '@angular/core';
@@ -56,21 +56,11 @@ export class AppComponent {
           idService: 'soil-moisture'
         }
       ]
-    },
-    {
-      title: 'Air Tampungan',
-      cards: [{
-        title: 'Tinggi',
-        cols: 2,
-        rows: 1,
-        callbackId: 5,
-        idService: 'water-level'
-      }]
     }
   ];
 
   constructor(
-    private breakpointObserver: BreakpointObserver,
+    // private breakpointObserver: BreakpointObserver,
     private connectionService: ConnectionService
   ) {
     // tslint:disable-next-line: deprecation

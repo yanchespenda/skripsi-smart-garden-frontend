@@ -99,6 +99,7 @@ export class CardComponent implements OnInit, OnDestroy {
     private connectionService: ConnectionService,
     private appService: AppService,
   ) {
+    // tslint:disable-next-line: deprecation
     this.connectionService.monitor().subscribe(isConnected => {
       this.isConnected = isConnected;
     });
@@ -203,6 +204,7 @@ export class CardComponent implements OnInit, OnDestroy {
     }
     this.initData();
 
+    // tslint:disable-next-line: deprecation
     this.refreshInterval = this.refreshIntervalCounter.subscribe(res => {
       this.initData();
     });

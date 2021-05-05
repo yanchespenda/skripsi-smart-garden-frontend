@@ -7,6 +7,9 @@ export const environment = {
 
   REQUEST_CREDENTIALS: true,
 
+  COOKIES_SECURED: false,
+  COOKIES_EXPIRED: 30 * 1000 * 60 * 60 * 24,
+
   baseUrl: 'http://127.0.0.1:3000/',
 };
 

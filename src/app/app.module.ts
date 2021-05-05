@@ -9,6 +9,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { CookieModule } from 'ngx-cookie';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
@@ -19,6 +20,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatInputModule } from '@angular/material/input';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { LayoutModule } from '@angular/cdk/layout';
 import { ChartComponent } from './components/chart/chart.component';
@@ -28,7 +32,11 @@ import { SigninComponent } from './components/signin/signin.component';
 import { DialogPinComponent } from './components/dialog-pin/dialog-pin.component';
 import { HttpInterceptorsService } from './services/http-interceptors.service';
 
+
+
 import { ConnectionServiceModule } from 'ng-connection-service';
+import { MainComponent } from './components/main/main.component';
+import { SignupComponent } from './components/signup/signup.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +46,8 @@ import { ConnectionServiceModule } from 'ng-connection-service';
     DialogDateComponent,
     SigninComponent,
     DialogPinComponent,
+    MainComponent,
+    SignupComponent,
   ],
   imports: [
     BrowserModule,
@@ -49,6 +59,7 @@ import { ConnectionServiceModule } from 'ng-connection-service';
     ReactiveFormsModule,
     HttpClientModule,
     ConnectionServiceModule,
+    CookieModule.forRoot(),
 
     MatToolbarModule,
     MatIconModule,
@@ -59,6 +70,9 @@ import { ConnectionServiceModule } from 'ng-connection-service';
     MatDialogModule,
     MatSelectModule,
     MatFormFieldModule,
+    MatSnackBarModule,
+    MatInputModule,
+    MatProgressBarModule,
 
     LayoutModule,
     ServiceWorkerModule.register('ngsw-worker.js', {

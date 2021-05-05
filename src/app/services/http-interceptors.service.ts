@@ -3,17 +3,29 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { OauthUser } from '../interfaces';
+import { OauthService } from './oauth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpInterceptorsService {
 
-  headerTokenName = 'X-XSRF-TOKEN';
+  isLogin = false;
+  currentUser: OauthUser;
 
   constructor(
-    private tokenService: HttpXsrfTokenExtractor
-  ) { }
+    private oauthService: OauthService,
+  ) {
+    this.getIsLogin();
+  }
+
+  getIsLogin(): void {
+    this.currentUser = this.oauthService.currentUserValue;
+    if (this.currentUser !== null) {
+      this.isLogin = true;
+    }
+  }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let modifiedReq = request;
@@ -22,31 +34,22 @@ export class HttpInterceptorsService {
       withCredentials: environment.REQUEST_CREDENTIALS,
     });
 
-    // if (this.isLogin && !modifiedReq.headers.has('Authorization')) {
-    //   modifiedReq = request.clone({
-    //     headers: request.headers.set('Authorization', 'Bearer ' + this.currentUser.token)
-    //   });
-    // }
-
-    // const identity = (window as any).identityId || null;
-    // if (identity !== null && !modifiedReq.headers.has(this.headerIdentityName)) {
-    //   modifiedReq = modifiedReq.clone({headers: modifiedReq.headers.set(this.headerIdentityName, identity)});
-    // }
-
-    const token = this.tokenService.getToken();
-    if (token !== null && !modifiedReq.headers.has(this.headerTokenName)) {
-      modifiedReq = modifiedReq.clone({headers: modifiedReq.headers.set(this.headerTokenName, token)});
+    if (this.isLogin && !modifiedReq.headers.has('Authorization')) {
+      modifiedReq = request.clone({
+        headers: request.headers.set('Authorization', 'Bearer ' + this.currentUser.accessToken)
+      });
     }
 
-    return next.handle(modifiedReq).pipe(tap((event: HttpEvent<any>) => {}, (err: any) => {
+    return next.handle(modifiedReq);
+    // return next.handle(modifiedReq).pipe(tap((event: HttpEvent<any>) => {}, (err: any) => {
       // console.log(err);
-      const getErrorCode = err.status || 0;
-      if (getErrorCode === 401) {
+      // const getErrorCode = err.status || 0;
+      // if (getErrorCode === 401) {
         // console.log('Run 401');
-      }
-      if (err instanceof HttpErrorResponse) {
+      // }
+      // if (err instanceof HttpErrorResponse) {
         // this.errorHandler.handleError(err);
-      }
-    }));
+      // }
+    // }));
   }
 }

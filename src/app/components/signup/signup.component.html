@@ -7,11 +7,11 @@
           mode="indeterminate">
         </mat-progress-bar>
         <mat-card-content class="oauthCardContent">
-          <form [formGroup]="signInForm">
+          <form [formGroup]="signUpForm">
             <div class="infoBoxParent noImage">
-              <h1 class="mat-headline subtitleText"><span>Sign in</span></h1>
+              <h1 class="mat-headline subtitleText"><span>Sign up</span></h1>
               <div>
-                <h3 *ngIf="!isErrorPrimary" class="mat-subheading-2 subtitleText"><span>Use your Smart Garden account</span></h3>
+                <h3 *ngIf="!isErrorPrimary" class="mat-subheading-2 subtitleText"><span>Create a Smart Garden account</span></h3>
                 <h3 *ngIf="isErrorPrimary" class="mat-subheading-2 subtitleText mat-error">
                   <span>{{ getErrorMessagePrimary() }}</span></h3>
               </div>
@@ -21,13 +21,22 @@
               <mat-form-field class="fullSize" appearance="outline">
                 <mat-label>Username</mat-label>
                 <input #inputUsername formControlName="username" matInput value="" autocomplete="off">
-                <mat-error *ngIf="signInForm.invalid">{{ getErrorMessageUsername() }}</mat-error>
+                <mat-error *ngIf="signUpForm.invalid">{{ getErrorMessageUsername() }}</mat-error>
               </mat-form-field>
               <mat-form-field class="fullSize inputMargin" appearance="outline">
                 <mat-label>Password</mat-label>
                 <input #inputPassword [type]="pswdHide ? 'password' : 'text'" formControlName="password" matInput
                   value="" autocomplete="off">
-                <mat-error *ngIf="signInForm.invalid">{{ getErrorMessagePassword() }}</mat-error>
+                <mat-error *ngIf="signUpForm.invalid">{{ getErrorMessagePassword() }}</mat-error>
+                <button type="button" mat-icon-button matSuffix (click)="pswdHide = !pswdHide">
+                  <mat-icon aria-label="Password icon">{{ pswdHide ? 'visibility_off' : 'visibility' }}</mat-icon>
+                </button>
+              </mat-form-field>
+              <mat-form-field class="fullSize inputMargin" appearance="outline">
+                <mat-label>Token</mat-label>
+                <input #inputToken [type]="pswdHide ? 'password' : 'text'" formControlName="token" matInput
+                  value="" autocomplete="off">
+                <mat-error *ngIf="signUpForm.invalid">{{ getErrorMessageToken() }}</mat-error>
                 <button type="button" mat-icon-button matSuffix (click)="pswdHide = !pswdHide">
                   <mat-icon aria-label="Password icon">{{ pswdHide ? 'visibility_off' : 'visibility' }}</mat-icon>
                 </button>
@@ -36,10 +45,10 @@
               <div class="formAction">
                 <div fxLayout="row" fxLayoutAlign="center center">
                   <div fxLayout="row">
-                    <a class="formLinkText" routerLink="/oauth/signup">Create new account?</a>
+                    <a class="formLinkText" routerLink="/oauth/signin">Already have account?</a>
                   </div>
                   <div fxFlex></div>
-                  <button mat-flat-button color="primary" (click)="SubmitA()" [disabled]="isLoading">&nbsp; SIGN IN
+                  <button mat-flat-button color="primary" (click)="SubmitA()" [disabled]="isLoading">&nbsp; SIGN UP
                     &nbsp;</button>
                 </div>
               </div>

@@ -31,3 +31,9 @@ export interface OauthUser {
 export interface OauthMcuToken {
     token: string;
 }
+
+export interface OauthChangePassword {
+    password: string;
+    passwordNew: string;
+    passwordConfirm: string;
+}

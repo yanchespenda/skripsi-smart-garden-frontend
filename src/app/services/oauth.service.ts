@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { OauthMcuToken, OauthStatus, OauthUser, SigninResponse, SignupResponse } from '../interfaces';
+import { OauthChangePassword, OauthMcuToken, OauthStatus, OauthUser, SigninResponse, SignupResponse } from '../interfaces';
 import { CookieService } from 'ngx-cookie';
 
 @Injectable({
@@ -114,5 +114,13 @@ export class OauthService {
     const dataParams = new HttpParams()
                   .set('t', new Date().toString());
     return this.http.post<OauthMcuToken>(this.oauthURL + 'mcu-token', dataParams);
+  }
+
+  changePassword({password, passwordConfirm, passwordNew}: OauthChangePassword): Observable<OauthStatus> {
+    const dataParams = new HttpParams()
+                  .set('password', password)
+                  .set('passwordConfirm', passwordConfirm)
+                  .set('passwordNew', passwordNew);
+    return this.http.post<OauthStatus>(this.oauthURL + 'change-password', dataParams);
   }
 }

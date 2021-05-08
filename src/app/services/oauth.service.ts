@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { OauthStatus, OauthUser, SigninResponse, SignupResponse } from '../interfaces';
+import { OauthMcuToken, OauthStatus, OauthUser, SigninResponse, SignupResponse } from '../interfaces';
 import { CookieService } from 'ngx-cookie';
 
 @Injectable({
@@ -106,4 +106,13 @@ export class OauthService {
     return this.http.post<SignupResponse>(this.oauthURL + 'signup', dataParams);
   }
 
+  getMcuToken(): Observable<OauthMcuToken> {
+    return this.http.get<OauthMcuToken>(this.oauthURL + 'mcu-token');
+  }
+
+  createMcuToken(): Observable<OauthMcuToken> {
+    const dataParams = new HttpParams()
+                  .set('t', new Date().toString());
+    return this.http.post<OauthMcuToken>(this.oauthURL + 'mcu-token', dataParams);
+  }
 }

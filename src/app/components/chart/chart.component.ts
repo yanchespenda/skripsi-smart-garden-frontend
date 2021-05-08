@@ -1,4 +1,14 @@
-import { Component, ElementRef, EventEmitter, Input, NgZone, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  NgZone,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges
+} from '@angular/core';
 
 import {
   Chart,
@@ -8,17 +18,22 @@ import {
   PointElement,
   LineElement,
   Tooltip,
-  Legend
+  Legend,
+  TimeScale,
+  ScatterController
 } from 'chart.js';
+import 'chartjs-adapter-luxon';
 
 Chart.register(
   LineController,
+  ScatterController,
   CategoryScale,
   LinearScale,
   PointElement,
   LineElement,
   Tooltip,
-  Legend
+  Legend,
+  TimeScale
 );
 
 @Component({

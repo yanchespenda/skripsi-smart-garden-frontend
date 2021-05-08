@@ -23,6 +23,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 import { LayoutModule } from '@angular/cdk/layout';
 import { ChartComponent } from './components/chart/chart.component';
@@ -37,6 +38,9 @@ import { HttpInterceptorsService } from './services/http-interceptors.service';
 import { ConnectionServiceModule } from 'ng-connection-service';
 import { MainComponent } from './components/main/main.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { DialogConfirmComponent } from './components/dialog-confirm/dialog-confirm.component';
+import { DialogMcuTokenComponent } from './components/dialog-mcu-token/dialog-mcu-token.component';
+import { DialogChangePasswordComponent } from './components/dialog-change-password/dialog-change-password.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +52,9 @@ import { SignupComponent } from './components/signup/signup.component';
     DialogPinComponent,
     MainComponent,
     SignupComponent,
+    DialogConfirmComponent,
+    DialogMcuTokenComponent,
+    DialogChangePasswordComponent,
   ],
   imports: [
     BrowserModule,
@@ -60,6 +67,7 @@ import { SignupComponent } from './components/signup/signup.component';
     HttpClientModule,
     ConnectionServiceModule,
     CookieModule.forRoot(),
+    ClipboardModule,
 
     MatToolbarModule,
     MatIconModule,

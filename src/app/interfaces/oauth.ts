@@ -27,3 +27,7 @@ export interface OauthUser {
     username: string;
     accessToken: string;
 }
+
+export interface OauthMcuToken {
+    token: string;
+}

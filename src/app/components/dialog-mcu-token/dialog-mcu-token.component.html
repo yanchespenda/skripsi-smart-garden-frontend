@@ -1,0 +1,19 @@
+<h1 mat-dialog-title>Mcu Token</h1>
+<div mat-dialog-content class="dialogContent">
+  <form [formGroup]="dialogForm">
+
+    <div class="formPadding">
+      <mat-form-field class="fullSize" appearance="outline">
+        <mat-label>Token</mat-label>
+        <input #inputToken formControlName="mcuToken" readonly aria-readonly="true" matInput value="" autocomplete="off">
+        <!-- <mat-error *ngIf="signInForm.invalid">{{ getErrorMessageUsername() }}</mat-error> -->
+      </mat-form-field>
+    </div>
+
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button *ngIf="!isNull" (click)="copyToken()">Copy Token</button>
+  <button mat-button *ngIf="isNull" (click)="generateToken()">Generate Token</button>
+  <button mat-button (click)="onConfirm()">OK</button>
+</div>

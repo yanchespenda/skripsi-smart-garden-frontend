@@ -1,12 +1,37 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { CardData, ChartJsFormat, UniversalSelect } from 'src/app/interfaces';
-import { ChartComponent } from '@component/chart/chart.component';
-import { MatDialog } from '@angular/material/dialog';
-import { DialogDateComponent } from '@component/dialog-date/dialog-date.component';
-import { AppService } from 'src/app/app.service';
-import { DateTime } from 'luxon';
-import { interval, Subscription } from 'rxjs';
-import { ConnectionService } from 'ng-connection-service';
+import {
+  Component,
+  Input,
+  OnDestroy,
+  OnInit,
+  ViewChild
+} from '@angular/core';
+import {
+  CardData,
+  ChartJsFormat,
+  UniversalSelect
+} from 'src/app/interfaces';
+import {
+  ChartComponent
+} from '@component/chart/chart.component';
+import {
+  MatDialog
+} from '@angular/material/dialog';
+import {
+  DialogDateComponent
+} from '@component/dialog-date/dialog-date.component';
+import {
+  AppService
+} from 'src/app/app.service';
+import {
+  DateTime
+} from 'luxon';
+import {
+  interval,
+  Subscription
+} from 'rxjs';
+import {
+  ConnectionService
+} from 'ng-connection-service';
 
 @Component({
   selector: 'app-card',
@@ -31,7 +56,7 @@ export class CardComponent implements OnInit, OnDestroy {
     labels: [],
     datasets: []
   };
-  options = {
+  options: any = {
     responsive: true,
     maintainAspectRatio: false,
     hover: {
@@ -39,12 +64,18 @@ export class CardComponent implements OnInit, OnDestroy {
       intersect: true
     },
     scales: {
-        x: {
-            display: true,
-        },
-        y: {
-            display: true,
-        }
+      x: {
+        display: true,
+        type: 'time',
+        offset: true,
+      },
+      y: {
+        display: true,
+      },
+
+      // xAxes: [{
+      //   type: 'time',
+      // }]
     },
     font: {
       family: 'Roboto, "Helvetica Neue", sans-serif'
@@ -64,8 +95,7 @@ export class CardComponent implements OnInit, OnDestroy {
   currentDate = 1;
   localStorageName: string;
   localStorageNameOffline: string;
-  dateFormatSelect: UniversalSelect[] = [
-    {
+  dateFormatSelect: UniversalSelect[] = [{
       value: 1,
       viewValue: 'Last 30 data'
     },
@@ -129,19 +159,26 @@ export class CardComponent implements OnInit, OnDestroy {
   manageData(res: ChartJsFormat): void {
     this.data = {
       labels: res.labels.map(item => {
-        const parse = DateTime.fromISO(item);
+        // this.options.scales.x.type = 'timeseries';
+        // const parse = DateTime.fromISO(item);
         if (this.currentDate === 1) {
-          return parse.toLocaleString(DateTime.TIME_24_WITH_SECONDS);
-        } else if (this.currentDate === 2 ) {
-          return parse.toFormat('HH:mm');
-        } else if (this.currentDate === 3 ) {
-          return parse.toFormat('HH:mm');
-        } else if (this.currentDate === 4 ) {
-          return parse.toLocaleString(DateTime.DATE_SHORT);
+          // this.options.scales.x.type = 'timeseries';
+          // return parse.toLocaleString(DateTime.TIME_24_WITH_SECONDS);
+        } else if (this.currentDate === 2) {
+          this.options.scales.x.time.unit = 'minute';
+          // return parse.toFormat('HH:mm');
+        } else if (this.currentDate === 3) {
+          this.options.scales.x.time.unit = 'hour';
+          // return parse.toFormat('HH:mm');
+        } else if (this.currentDate === 4) {
+          this.options.scales.x.time.unit = 'day';
+          // return parse.toLocaleString(DateTime.DATE_SHORT);
         } else if (this.currentDate === 5) {
-          return parse.toFormat('LLLL kkkk');
+          this.options.scales.x.time.unit = 'month';
+          // return parse.toFormat('LLLL kkkk');
         }
-        return DateTime.fromISO(item).toLocaleString(DateTime.DATETIME_FULL);
+        // return DateTime.fromISO(item).toLocaleString(DateTime.DATETIME_FULL);
+        return item;
       }).reverse(),
       datasets: res.datasets.map((item, index) => {
         return {
@@ -166,7 +203,7 @@ export class CardComponent implements OnInit, OnDestroy {
           this.isOfflineData = true;
           this.manageData(parseData);
         }
-      } catch (error) { }
+      } catch (error) {}
     }
   }
 

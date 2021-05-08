@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogChangePasswordComponent } from '@component/dialog-change-password/dialog-change-password.component';
+import { DialogConfirmComponent } from '@component/dialog-confirm/dialog-confirm.component';
+import { DialogMcuTokenComponent } from '@component/dialog-mcu-token/dialog-mcu-token.component';
 import { ConnectionService } from 'ng-connection-service';
 import { GridCardData } from 'src/app/interfaces';
+import { OauthService } from 'src/app/services/oauth.service';
 
 @Component({
   selector: 'app-main',
@@ -51,12 +56,56 @@ export class MainComponent implements OnInit {
 
   constructor(
     // private breakpointObserver: BreakpointObserver,
-    private connectionService: ConnectionService
+    private connectionService: ConnectionService,
+    private matDialog: MatDialog,
+    private oauthService: OauthService,
   ) {
     // tslint:disable-next-line: deprecation
     this.connectionService.monitor().subscribe(isConnected => {
       this.isConnected = isConnected;
     });
+  }
+
+  mcuToken(): void {
+    const dialogRef = this.matDialog.open(DialogMcuTokenComponent, {
+      maxWidth: '450px',
+      width: '100%'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // this.oauthService.credentialsDestroy(this.redirectOauth);
+      }
+    });
+  }
+
+  changePassword(): void {
+    const dialogRef = this.matDialog.open(DialogChangePasswordComponent, {
+      maxWidth: '450px',
+      width: '100%'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // this.oauthService.credentialsDestroy(this.redirectOauth);
+      }
+    });
+  }
+
+  signOut(): void {
+    const dialogRef = this.matDialog.open(DialogConfirmComponent, {
+      data: {
+        title: 'Signout',
+        content: 'Are you sure want signout?'
+      }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.oauthService.credentialsDestroy(this.redirectOauth);
+      }
+    });
+  }
+
+  redirectOauth(): void {
+    window.open('/', '_self');
   }
 
   ngOnInit(): void {}

@@ -4,9 +4,23 @@
   <button mat-icon-button aria-label="Flush">
     <mat-icon>grass</mat-icon>
   </button>
-  <button mat-icon-button aria-label="Signin">
-    <mat-icon>login</mat-icon>
+  <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">
+    <mat-icon>settings</mat-icon>
   </button>
+  <mat-menu #menu="matMenu" xPosition="before">
+    <button mat-menu-item aria-label="Mcu Token" (click)="mcuToken()">
+      <mat-icon>vpn_key</mat-icon>
+      <span>NodeMCU Token</span>
+    </button>
+    <button mat-menu-item aria-label="Change Password" (click)="changePassword()">
+      <mat-icon>password</mat-icon>
+      <span>Change password</span>
+    </button>
+    <button mat-menu-item aria-label="Signout" (click)="signOut()">
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
+    </button>
+  </mat-menu>
 </mat-toolbar>
 
 <div>

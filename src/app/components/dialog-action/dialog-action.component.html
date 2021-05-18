@@ -1,0 +1,52 @@
+<h1 mat-dialog-title>Watering {{ action.lastAction ? '[Latest action: ' + action.lastAction + ']' : ''}}</h1>
+<div mat-dialog-content class="dialogContent">
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <h3>Automation</h3>
+    <button mat-button aria-label="Toggle menu">
+      <mat-icon>settings</mat-icon>
+      Setting
+    </button>
+  </div>
+  <mat-list>
+    <mat-list-item>
+      <div mat-line>Enable Automation</div>
+      <div mat-line>{{ action.automationEnable ? 'Enabled' : 'Disabled' }}</div>
+    </mat-list-item>
+    <div mat-subheader *ngIf="action.automationParameter.length > 0">Parameter</div>
+    <mat-list-item *ngFor="let param of action.automationParameter">
+      <div mat-line>{{ param.sensor }}</div>
+      <div mat-line>Enable: {{ param.enable }}</div>
+      <div mat-line>Value: {{ param.value }}</div>
+    </mat-list-item>
+    <mat-list-item>
+      <div mat-line>Maximum Attemp</div>
+      <div mat-line>{{ action.automationAttemp }}</div>
+    </mat-list-item>
+  </mat-list>
+  <mat-divider></mat-divider>
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <h3>Routine Task</h3>
+    <button mat-button aria-label="Toggle menu">
+      <mat-icon>settings</mat-icon>
+      Setting
+    </button>
+  </div>
+  <mat-list>
+    <mat-list-item>
+      <div mat-line>Enable Routine</div>
+      <div mat-line>{{ action.routineTaskEnable ? 'Enabled' : 'Disabled' }}</div>
+    </mat-list-item>
+    <mat-list-item>
+      <div mat-line>Task Skip If Parameter Exceed</div>
+      <div mat-line>{{ action.routineTaskSkipIfExceedParameter ? 'Yes' : 'No' }}</div>
+    </mat-list-item>
+    <mat-list-item>
+      <div mat-line>Routine Time</div>
+      <div mat-line>{{ action.routineTaskTime }}</div>
+    </mat-list-item>
+  </mat-list>
+</div>
+<div mat-dialog-actions>
+  <!-- <button mat-button mat-dialog-close>Cancel</button> -->
+  <button mat-button (click)="onConfirm()">Close</button>
+</div>

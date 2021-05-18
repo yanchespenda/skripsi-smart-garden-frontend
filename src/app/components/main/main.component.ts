@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { DialogActionComponent } from '@component/dialog-action/dialog-action.component';
 import { DialogChangePasswordComponent } from '@component/dialog-change-password/dialog-change-password.component';
 import { DialogConfirmComponent } from '@component/dialog-confirm/dialog-confirm.component';
 import { DialogMcuTokenComponent } from '@component/dialog-mcu-token/dialog-mcu-token.component';
@@ -106,6 +107,18 @@ export class MainComponent implements OnInit {
 
   redirectOauth(): void {
     window.open('/', '_self');
+  }
+
+  action(): void {
+    const dialogRef = this.matDialog.open(DialogActionComponent, {
+      maxWidth: '450px',
+      width: '100%'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // this.oauthService.credentialsDestroy(this.redirectOauth);
+      }
+    });
   }
 
   ngOnInit(): void {}

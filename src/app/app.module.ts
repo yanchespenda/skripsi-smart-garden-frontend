@@ -24,6 +24,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ClipboardModule } from '@angular/cdk/clipboard';
+import { MatListModule } from '@angular/material/list';
 
 import { LayoutModule } from '@angular/cdk/layout';
 import { ChartComponent } from './components/chart/chart.component';
@@ -41,6 +42,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { DialogConfirmComponent } from './components/dialog-confirm/dialog-confirm.component';
 import { DialogMcuTokenComponent } from './components/dialog-mcu-token/dialog-mcu-token.component';
 import { DialogChangePasswordComponent } from './components/dialog-change-password/dialog-change-password.component';
+import { DialogActionComponent } from './components/dialog-action/dialog-action.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,7 @@ import { DialogChangePasswordComponent } from './components/dialog-change-passwo
     DialogConfirmComponent,
     DialogMcuTokenComponent,
     DialogChangePasswordComponent,
+    DialogActionComponent,
   ],
   imports: [
     BrowserModule,
@@ -81,6 +84,7 @@ import { DialogChangePasswordComponent } from './components/dialog-change-passwo
     MatSnackBarModule,
     MatInputModule,
     MatProgressBarModule,
+    MatListModule,
 
     LayoutModule,
     ServiceWorkerModule.register('ngsw-worker.js', {

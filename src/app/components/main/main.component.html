@@ -1,7 +1,7 @@
 <mat-toolbar color="primary">
   <span>Smart Garden{{ !isConnected ? ' [Offline]' : '' }}</span>
   <span fxFlex></span>
-  <button mat-icon-button aria-label="Flush">
+  <button mat-icon-button aria-label="Action" (click)="action()">
     <mat-icon>grass</mat-icon>
   </button>
   <button mat-icon-button class="more-button" [matMenuTriggerFor]="menu" aria-label="Toggle menu">

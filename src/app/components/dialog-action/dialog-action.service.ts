@@ -19,4 +19,10 @@ export class DialogActionService {
   action(): Observable<Action> {
     return this.http.get<Action>(this.actionURL + 'setting');
   }
+
+  flushNow(): Observable<Action> {
+    return this.http.post<Action>(this.actionURL + 'flush', {
+      value: 1
+    });
+  }
 }

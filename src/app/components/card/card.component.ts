@@ -140,7 +140,9 @@ export class CardComponent implements OnInit, OnDestroy {
       data: {
         dateFormatSelect: this.dateFormatSelect,
         currentDate: this.currentDate
-      }
+      },
+      maxWidth: '600px',
+      width: '100%'
     });
     // tslint:disable-next-line: deprecation
     dialogRef.afterClosed().subscribe((result) => {

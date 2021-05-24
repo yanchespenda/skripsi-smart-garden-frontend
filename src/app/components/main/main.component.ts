@@ -96,7 +96,9 @@ export class MainComponent implements OnInit {
       data: {
         title: 'Signout',
         content: 'Are you sure want signout?'
-      }
+      },
+      maxWidth: '400px',
+      width: '100%'
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

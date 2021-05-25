@@ -32,6 +32,7 @@ import {
 import {
   ConnectionService
 } from 'ng-connection-service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-card',
@@ -45,6 +46,7 @@ export class CardComponent implements OnInit, OnDestroy {
 
   isConnected = true;
   isOfflineData = false;
+  isLoading = false;
 
   refreshIntervalCounter = interval(30 * 1000);
   refreshInterval: Subscription;
@@ -214,8 +216,12 @@ export class CardComponent implements OnInit, OnDestroy {
       this.initOffline();
       return;
     }
-    // tslint:disable-next-line: deprecation
-    this.appService.getSensor(this.cardData.idService, this.currentDate).subscribe(res => {
+    this.isLoading = true;
+    this.appService.getSensor(this.cardData.idService, this.currentDate)
+    .pipe(
+      finalize(() => this.isLoading = false)
+    )
+    .subscribe(res => {
       this.manageData(res);
       localStorage.setItem(this.localStorageNameOffline, JSON.stringify(res).toString());
     });

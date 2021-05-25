@@ -13,3 +13,12 @@ export interface Action {
   routineTaskSkipIfExceedParameter: boolean;
   routineTaskTime: string;
 }
+
+export interface ActionDetail {
+  automationEnable?: boolean;
+  automationParameter?: ActionParameter[];
+  automationAttemp?: number;
+  routineTaskEnable?: boolean;
+  routineTaskSkipIfExceedParameter?: boolean;
+  routineTaskTime?: string;
+}

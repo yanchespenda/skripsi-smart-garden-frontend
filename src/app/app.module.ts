@@ -25,13 +25,15 @@ import { MatInputModule } from '@angular/material/input';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { NgxMatTimepickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
 
 import { LayoutModule } from '@angular/cdk/layout';
 import { ChartComponent } from './components/chart/chart.component';
 import { CardComponent } from './components/card/card.component';
 import { DialogDateComponent } from './components/dialog-date/dialog-date.component';
 import { SigninComponent } from './components/signin/signin.component';
-import { DialogPinComponent } from './components/dialog-pin/dialog-pin.component';
 import { HttpInterceptorsService } from './services/http-interceptors.service';
 
 
@@ -43,6 +45,7 @@ import { DialogConfirmComponent } from './components/dialog-confirm/dialog-confi
 import { DialogMcuTokenComponent } from './components/dialog-mcu-token/dialog-mcu-token.component';
 import { DialogChangePasswordComponent } from './components/dialog-change-password/dialog-change-password.component';
 import { DialogActionComponent } from './components/dialog-action/dialog-action.component';
+import { DialogActionSettingComponent } from './components/dialog-action-setting/dialog-action-setting.component';
 
 @NgModule({
   declarations: [
@@ -51,13 +54,13 @@ import { DialogActionComponent } from './components/dialog-action/dialog-action.
     CardComponent,
     DialogDateComponent,
     SigninComponent,
-    DialogPinComponent,
     MainComponent,
     SignupComponent,
     DialogConfirmComponent,
     DialogMcuTokenComponent,
     DialogChangePasswordComponent,
     DialogActionComponent,
+    DialogActionSettingComponent,
   ],
   imports: [
     BrowserModule,
@@ -85,6 +88,11 @@ import { DialogActionComponent } from './components/dialog-action/dialog-action.
     MatInputModule,
     MatProgressBarModule,
     MatListModule,
+    MatProgressSpinnerModule,
+    MatSlideToggleModule,
+
+    NgxMatNativeDateModule,
+    NgxMatTimepickerModule,
 
     LayoutModule,
     ServiceWorkerModule.register('ngsw-worker.js', {

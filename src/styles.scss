@@ -164,3 +164,32 @@ body {
     }
   }
 }
+
+.universalLoaderContainer {
+  position: relative;
+
+  .loaderCover {
+    z-index: 3;
+    outline: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+    height: 100%;
+    opacity: .5;
+    background: #fafafa52;
+    text-align: center;
+  }
+
+  .loaderProgressBar {
+    z-index: 4;
+    width: 100%;
+    position: absolute;
+
+    &.isRounded {
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+    }
+  }
+}

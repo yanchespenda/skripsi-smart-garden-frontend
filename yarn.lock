@@ -121,6 +121,13 @@
     ora "5.4.0"
     rxjs "6.6.7"
 
+"@angular-material-components/datetime-picker@^6.0.2":
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/@angular-material-components/datetime-picker/-/datetime-picker-6.0.2.tgz#1d454f532cc1f153208e6b5c85fe6abd1762f8fe"
+  integrity sha512-CFuzjEiGfDexRIozX41O6bCwwlZPB7hTKXaX8l66kvBf+aTSQhFolWMItgyDDtHyTEVDGiaYGNvFX7lWmBDwFQ==
+  dependencies:
+    tslib "^2.1.0"
+
 "@angular/animations@~12.0.1":
   version "12.0.1"
   resolved "https://registry.yarnpkg.com/@angular/animations/-/animations-12.0.1.tgz#4937daf469930bbe581dd02522125ebfd87e89f4"

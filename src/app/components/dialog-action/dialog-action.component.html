@@ -1,8 +1,15 @@
-<h1 mat-dialog-title>Watering {{ action.lastAction ? '[Latest action: ' + action.lastAction + ']' : ''}}</h1>
+<h1 mat-dialog-title>Watering {{ action?.lastAction ? '[Latest action: ' + action.lastAction + ']' : ''}}</h1>
+<div class="universalLoaderContainer">
+  <mat-progress-bar 
+    *ngIf="isLoading"
+    class="loaderProgressBar"
+    color="primary" mode="indeterminate">
+  </mat-progress-bar>
+</div>
 <div mat-dialog-content class="dialogContent">
   <div fxLayout="column" fxLayoutAlign="center center">
     <h3 class="titleNoMargin">Automation</h3>
-    <button mat-button aria-label="Toggle automation setting">
+    <button mat-button aria-label="Toggle automation setting" (click)="openSetting(1)">
       <mat-icon>settings</mat-icon>
       Setting
     </button>
@@ -10,23 +17,23 @@
   <mat-list>
     <mat-list-item>
       <div mat-line>Enable Automation</div>
-      <div mat-line>{{ action.automationEnable ? 'Enabled' : 'Disabled' }}</div>
+      <div mat-line>{{ action?.automationEnable ? 'Enabled' : 'Disabled' }}</div>
     </mat-list-item>
-    <div mat-subheader *ngIf="action.automationParameter.length > 0">Parameter</div>
-    <mat-list-item *ngFor="let param of action.automationParameter">
+    <div mat-subheader *ngIf="action?.automationParameter.length > 0">Parameter</div>
+    <mat-list-item *ngFor="let param of action?.automationParameter">
       <div mat-line>{{ param.sensor }}</div>
       <div mat-line>Enable: {{ param.enable ? 'Yes' : 'No' }}</div>
       <div mat-line>Value: {{ param.value }}</div>
     </mat-list-item>
     <mat-list-item>
       <div mat-line>Maximum Attemp</div>
-      <div mat-line>{{ action.automationAttemp }}</div>
+      <div mat-line>{{ action?.automationAttemp }}</div>
     </mat-list-item>
   </mat-list>
   <mat-divider></mat-divider>
   <div fxLayout="column" fxLayoutAlign="center center" class="marginList">
     <h3 class="titleNoMargin">Routine Task</h3>
-    <button mat-button aria-label="Toggle routine setting">
+    <button mat-button aria-label="Toggle routine setting" (click)="openSetting(2)">
       <mat-icon>settings</mat-icon>
       Setting
     </button>
@@ -34,19 +41,19 @@
   <mat-list>
     <mat-list-item>
       <div mat-line>Enable Routine</div>
-      <div mat-line>{{ action.routineTaskEnable ? 'Enabled' : 'Disabled' }}</div>
+      <div mat-line>{{ action?.routineTaskEnable ? 'Enabled' : 'Disabled' }}</div>
     </mat-list-item>
     <mat-list-item>
       <div mat-line>Task Skip If Parameter Exceed</div>
-      <div mat-line>{{ action.routineTaskSkipIfExceedParameter ? 'Yes' : 'No' }}</div>
+      <div mat-line>{{ action?.routineTaskSkipIfExceedParameter ? 'Yes' : 'No' }}</div>
     </mat-list-item>
     <mat-list-item>
       <div mat-line>Routine Time</div>
-      <div mat-line>{{ action.routineTaskTime ? action.routineTaskTime : '-' }}</div>
+      <div mat-line>{{ action?.routineTaskTime ? action.routineTaskTime : '-' }}</div>
     </mat-list-item>
   </mat-list>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onConfirm()">Close</button>
-  <button mat-button (click)="onFlushNow()">Flush Now</button>
+  <button mat-button [disabled]="isLoading" (click)="onFlushNow()">Flush Now</button>
 </div>

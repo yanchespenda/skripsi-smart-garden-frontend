@@ -114,7 +114,7 @@ export class MainComponent implements OnInit {
   action(): void {
     const dialogRef = this.matDialog.open(DialogActionComponent, {
       maxWidth: '450px',
-      width: '100%'
+      width: '100%',
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

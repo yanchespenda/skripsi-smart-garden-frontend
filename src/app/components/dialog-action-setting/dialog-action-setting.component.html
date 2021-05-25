@@ -1,0 +1,55 @@
+<h1 mat-dialog-title>Setting [{{ settingType }}] {{ settingType === 1 ? 'Automation' : 'Routine' }}</h1>
+<div mat-dialog-content class="dialogContent">
+  <form [formGroup]="dialogForm">
+
+    <ng-container *ngIf="settingType === 1">
+      <div class="formPadding">
+
+        <div class="fullSize inputMargin">
+          <mat-slide-toggle color="primary" formControlName="automationEnable" aria-label="Enable automation">
+            Enable automation
+          </mat-slide-toggle>
+        </div>
+  
+        <mat-form-field class="fullSize inputMargin" appearance="outline">
+          <mat-label>Parameter soil temperature</mat-label>
+          <input formControlName="automationParamaterSoilTemperature" matInput type="number" value="" autocomplete="off">
+        </mat-form-field>
+
+        <mat-form-field class="fullSize inputMargin" appearance="outline">
+          <mat-label>Parameter soil moisture</mat-label>
+          <input formControlName="automationParamaterSoilMoisture" matInput type="number" value="" autocomplete="off">
+        </mat-form-field>
+  
+        <mat-form-field class="fullSize inputMargin" appearance="outline">
+          <mat-label>Max exceed attemp</mat-label>
+          <input formControlName="automationAttemp" matInput value="" type="number" autocomplete="off">
+        </mat-form-field>
+      </div>
+    </ng-container>
+
+    <ng-container *ngIf="settingType === 2">
+      <div class="fullSize inputMargin">
+        <mat-slide-toggle color="primary" formControlName="routineEnable" aria-label="Enable routine">
+          Enable routine
+        </mat-slide-toggle>
+      </div>
+
+      <div class="fullSize inputMargin">
+        <mat-slide-toggle color="primary" formControlName="routineSkipParamater" aria-label="Skrip parameter exceed">
+          Skip parameter exceed
+        </mat-slide-toggle>
+      </div>
+
+      <div class="fullSize inputMargin">
+        <span>Routine time</span>
+        <ngx-mat-timepicker formControlName="routineTime"></ngx-mat-timepicker>
+      </div>
+    </ng-container>
+
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button (click)="onConfirm()">Save</button>
+</div>

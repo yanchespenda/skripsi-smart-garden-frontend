@@ -47,15 +47,7 @@ export class DialogActionComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // this.dialogActionService.flushNow()
-        // .pipe(
-        //   finalize(() => this.loadSetting())
-        // )
-        // .subscribe(() => {
-        //   this.matSnackBar.open('Flushing now...', 'close', {
-        //     duration: 3000
-        //   });
-        // });
+        this.loadSetting();
       }
     });
   }

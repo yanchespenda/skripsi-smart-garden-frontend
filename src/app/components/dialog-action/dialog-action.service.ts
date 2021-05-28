@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Action, ActionDetail } from 'src/app/interfaces';
+import { Action, ActionDetail, UniversalStatusResponse } from 'src/app/interfaces';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -21,7 +21,11 @@ export class DialogActionService {
   }
 
   actionDetail(type: string): Observable<ActionDetail> {
-    return this.http.get<ActionDetail>(this.actionURL + 'setting/' + type);
+    return this.http.get<ActionDetail>(this.actionURL + 'setting-' + type);
+  }
+
+  actionDetailSave(type: string, body: object): Observable<UniversalStatusResponse> {
+    return this.http.post<UniversalStatusResponse>(this.actionURL + 'setting-' + type, body);
   }
 
   flushNow(): Observable<Action> {

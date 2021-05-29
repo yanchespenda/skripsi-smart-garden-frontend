@@ -27,6 +27,8 @@ import { ClipboardModule } from '@angular/cdk/clipboard';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 import { NgxMatTimepickerModule, NgxMatNativeDateModule } from '@angular-material-components/datetime-picker';
 
 import { LayoutModule } from '@angular/cdk/layout';
@@ -46,6 +48,7 @@ import { DialogMcuTokenComponent } from './components/dialog-mcu-token/dialog-mc
 import { DialogChangePasswordComponent } from './components/dialog-change-password/dialog-change-password.component';
 import { DialogActionComponent } from './components/dialog-action/dialog-action.component';
 import { DialogActionSettingComponent } from './components/dialog-action-setting/dialog-action-setting.component';
+import { DialogActionHistoryComponent } from './components/dialog-action-history/dialog-action-history.component';
 
 @NgModule({
   declarations: [
@@ -61,6 +64,7 @@ import { DialogActionSettingComponent } from './components/dialog-action-setting
     DialogChangePasswordComponent,
     DialogActionComponent,
     DialogActionSettingComponent,
+    DialogActionHistoryComponent,
   ],
   imports: [
     BrowserModule,
@@ -90,6 +94,8 @@ import { DialogActionSettingComponent } from './components/dialog-action-setting
     MatListModule,
     MatProgressSpinnerModule,
     MatSlideToggleModule,
+    MatPaginatorModule,
+    MatTableModule,
 
     NgxMatNativeDateModule,
     NgxMatTimepickerModule,

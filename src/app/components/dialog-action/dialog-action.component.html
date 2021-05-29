@@ -49,7 +49,20 @@
     </mat-list-item>
     <mat-list-item>
       <div mat-line>Routine Time</div>
-      <div mat-line>{{ action?.routineTaskTime ? action.routineTaskTime : '-' }}</div>
+      <div mat-line>{{ action?.routineTaskTime ? formatRoutineTime(action.routineTaskTime) : '-' }}</div>
+    </mat-list-item>
+  </mat-list>
+  <mat-divider></mat-divider>
+  <div fxLayout="column" fxLayoutAlign="center center" class="marginList">
+    <h3 class="titleNoMargin">Last {{ history.list.length }} Action History</h3>
+    <button mat-button aria-label="Toggle history" (click)="openHistory()">
+      Browse all history
+    </button>
+  </div>
+  <mat-list>
+    <mat-list-item *ngFor="let item of history.list">
+      <div mat-line>{{ formatDateTimeFull(item.createdAt) }}</div>
+      <div mat-line>{{ item.action || '-' }} • {{ item.from || '-' }}</div>
     </mat-list-item>
   </mat-list>
 </div>

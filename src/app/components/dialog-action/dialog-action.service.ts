@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Action, ActionDetail, UniversalStatusResponse } from 'src/app/interfaces';
+import { Action, ActionDetail, ActionHistory, UniversalStatusResponse } from 'src/app/interfaces';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -18,6 +18,10 @@ export class DialogActionService {
 
   action(): Observable<Action> {
     return this.http.get<Action>(this.actionURL + 'setting');
+  }
+
+  history(page?: number): Observable<ActionHistory> {
+    return this.http.get<ActionHistory>(this.actionURL + `history${ page ? `?page=${page}` : `` }`);
   }
 
   actionDetail(type: string): Observable<ActionDetail> {

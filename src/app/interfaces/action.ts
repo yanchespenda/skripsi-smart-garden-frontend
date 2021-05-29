@@ -22,3 +22,14 @@ export interface ActionDetail {
   routineTaskSkipIfExceedParameter?: boolean;
   routineTaskTime?: string;
 }
+
+export interface ActionHistoryList {
+  createdAt: string;
+  action: string;
+  from: string;
+}
+
+export interface ActionHistory {
+  total: number;
+  list: ActionHistoryList[];
+}

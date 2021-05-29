@@ -1,0 +1,10 @@
+@import '../../../dataTableMixin';
+
+@include mat-table-columns((
+
+    no: (width: 10%),
+    createdAt: (width: 50%, padding-left: 8px),
+    action: (width: 20%, padding-left: 8px),
+    from: (width: 20%, padding-left: 8px)
+
+));

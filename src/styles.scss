@@ -1,4 +1,4 @@
-@use '~@angular/material' as mat;
+@use '~@angular/material'as mat;
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
 // Plus imports for other components in your app.
@@ -154,7 +154,7 @@ body {
         .formAction {
           margin-top: 25px;
 
-          .formLinkText{
+          .formLinkText {
             text-decoration: none;
             margin-left: 14px;
             cursor: pointer;

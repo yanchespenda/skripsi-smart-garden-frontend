@@ -23,7 +23,7 @@
     <mat-list-item *ngFor="let param of action?.automationParameter">
       <div mat-line>{{ param.sensor }}</div>
       <div mat-line>Enable: {{ param.enable ? 'Yes' : 'No' }}</div>
-      <div mat-line>Value: {{ param.value }}</div>
+      <div mat-line>Value / Operator: {{ param.value || 0 }} / {{ param.operator || '-'}}</div>
     </mat-list-item>
     <mat-list-item>
       <div mat-line>Maximum Attemp</div>

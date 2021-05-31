@@ -1,6 +1,7 @@
 export interface ActionParameter {
   enable: boolean;
   sensor: string;
+  operator: string;
   value: number;
 }
 

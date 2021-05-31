@@ -10,20 +10,52 @@
             Enable automation
           </mat-slide-toggle>
         </div>
-  
-        <mat-form-field class="fullSize inputMargin" appearance="outline">
+
+        <mat-divider class="marginDevider"></mat-divider>
+
+        <div class="fullSize inputMargin">
+          <mat-slide-toggle color="primary" formControlName="automationParamaterSoilTemperatureEnable" aria-label="Enable automation">
+            Enable parameter soil temperature
+          </mat-slide-toggle>
+        </div>
+        <div class="fullSize inputMargin" *ngIf="valForm.automationParamaterSoilTemperatureEnable.value">
+          <mat-slide-toggle color="primary" formControlName="automationParamaterSoilTemperatureOperation" aria-label="Enable automation">
+            Set attemp by greater than equal to value
+          </mat-slide-toggle>
+        </div>
+        <mat-form-field class="fullSize inputMargin" appearance="outline" *ngIf="valForm.automationParamaterSoilTemperatureEnable.value">
           <mat-label>Parameter soil temperature</mat-label>
           <input formControlName="automationParamaterSoilTemperature" matInput type="number" value="" autocomplete="off">
+          <mat-error *ngIf="dialogForm.invalid">{{ getErrorMessage('automationParamaterSoilTemperature') }}</mat-error>
+          <mat-hint align="start">Automation will attemp if temperature <strong>{{ valForm.automationParamaterSoilTemperatureOperation.value ? 'greater than equal to [>=]' : 'less than equal to [<=]' }}</strong>  {{ valForm.automationParamaterSoilTemperature.value }}</mat-hint>
         </mat-form-field>
 
-        <mat-form-field class="fullSize inputMargin" appearance="outline">
+        <mat-divider class="marginDevider"></mat-divider>
+
+        <div class="fullSize inputMargin">
+          <mat-slide-toggle color="primary" formControlName="automationParamaterSoilMoistureEnable" aria-label="Enable automation">
+            Enable parameter soil moisture
+          </mat-slide-toggle>
+        </div>
+        <div class="fullSize inputMargin" *ngIf="valForm.automationParamaterSoilMoistureEnable.value">
+          <mat-slide-toggle color="primary" formControlName="automationParamaterSoilMoistureOperation" aria-label="Enable automation">
+            Set attemp by greater than equal to value
+          </mat-slide-toggle>
+        </div>
+
+        <mat-form-field class="fullSize inputMargin" appearance="outline" *ngIf="valForm.automationParamaterSoilMoistureEnable.value">
           <mat-label>Parameter soil moisture</mat-label>
           <input formControlName="automationParamaterSoilMoisture" matInput type="number" value="" autocomplete="off">
+          <mat-error *ngIf="dialogForm.invalid">{{ getErrorMessage('automationParamaterSoilMoisture') }}</mat-error>
+          <mat-hint align="start">Automation will attemp if moisture <strong>{{ valForm.automationParamaterSoilMoistureOperation.value ? 'greater than equal to [>=]' : 'less than equal to [<=]' }}</strong>  {{ valForm.automationParamaterSoilMoisture.value }}</mat-hint>
         </mat-form-field>
+
+        <mat-divider class="marginDevider"></mat-divider>
   
         <mat-form-field class="fullSize inputMargin" appearance="outline">
           <mat-label>Max exceed attemp</mat-label>
           <input formControlName="automationAttemp" matInput value="" type="number" autocomplete="off">
+          <mat-error *ngIf="dialogForm.invalid">{{ getErrorMessage('automationAttemp') }}</mat-error>
         </mat-form-field>
       </div>
     </ng-container>
@@ -35,13 +67,13 @@
         </mat-slide-toggle>
       </div>
 
-      <div class="fullSize inputMargin">
+      <div class="fullSize inputMargin" *ngIf="valForm.routineEnable.value">
         <mat-slide-toggle color="primary" formControlName="routineSkipParamater" aria-label="Skrip parameter exceed">
           Skip parameter exceed
         </mat-slide-toggle>
       </div>
 
-      <div class="fullSize inputMargin">
+      <div class="fullSize inputMargin" *ngIf="valForm.routineEnable.value">
         <span>Routine time</span>
         <ngx-mat-timepicker formControlName="routineTime"></ngx-mat-timepicker>
       </div>

@@ -1,10 +1,11 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AfterViewInit, Component, Inject, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogActionService } from '@component/dialog-action/dialog-action.service';
 import { DialogConfirmComponent } from '@component/dialog-confirm/dialog-confirm.component';
 import { DateTime } from 'luxon';
+import { Subscription } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { ActionParameter } from 'src/app/interfaces';
 
@@ -17,7 +18,7 @@ interface DialogData {
   templateUrl: './dialog-action-setting.component.html',
   styleUrls: ['./dialog-action-setting.component.scss']
 })
-export class DialogActionSettingComponent implements OnInit {
+export class DialogActionSettingComponent implements OnInit, OnDestroy, AfterViewInit {
 
   dialogForm: FormGroup;
 
@@ -28,6 +29,9 @@ export class DialogActionSettingComponent implements OnInit {
     'automation',
     'routine'
   ];
+
+  switchParameterTemperature: Subscription;
+  switchParameterMoisture: Subscription;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -45,28 +49,53 @@ export class DialogActionSettingComponent implements OnInit {
           null, [Validators.required]
         ],
         automationParamaterSoilTemperature: [
-          null, [Validators.required, Validators.min(0), Validators.max(100)]
+          null, [Validators.min(0), Validators.max(100)]
         ],
         automationParamaterSoilMoisture: [
-          null, [Validators.required, Validators.min(0), Validators.max(100)]
+          null, [Validators.min(0), Validators.max(100)]
         ],
         automationAttemp: [
-          null, [Validators.required, Validators.min(0), Validators.max(3)]
+          null, [Validators.required, Validators.min(0), Validators.max(10)]
         ],
+
+        automationParamaterSoilTemperatureEnable: [
+          null, []
+        ],
+        automationParamaterSoilTemperatureOperation: [
+          null, []
+        ],
+        automationParamaterSoilMoistureEnable: [
+          null, []
+        ],
+        automationParamaterSoilMoistureOperation: [
+          null, []
+        ]
+
       });
     } else if (this.settingType === 2) {
       this.dialogForm = this.formBuilder.group({
         routineEnable: [
-          null, [Validators.required]
+          null, []
         ],
         routineSkipParamater: [
-          null, [Validators.required]
+          null, []
         ],
         routineTime: [
-          null, [Validators.required]
+          null, []
         ],
       });
     }
+  }
+
+  getErrorMessage(control: string): string {
+    if (this.valForm[control].hasError('required')) {
+      return `Field required`;
+    } else if (this.valForm[control].hasError('min')) {
+      return `Field must greater than equal to ${this.valForm[control].getError('min').min}`;
+    } else if (this.valForm[control].hasError('max')) {
+      return `Field must less than equal to ${this.valForm[control].getError('max').max}`;
+    }
+    return ``;
   }
 
   initSetting(): void {
@@ -81,8 +110,20 @@ export class DialogActionSettingComponent implements OnInit {
         res.automationParameter?.forEach(param => {
           if (param.sensor === 'soil.temperature') {
             this.valForm.automationParamaterSoilTemperature.setValue(param.value || 0);
+            this.valForm.automationParamaterSoilTemperatureEnable.setValue(param.enable || false);
+            if (param.operator === '>=') {
+              this.valForm.automationParamaterSoilTemperatureOperation.setValue(true);
+            } else {
+              this.valForm.automationParamaterSoilTemperatureOperation.setValue(false);
+            }
           } else if (param.sensor === 'soil.moisture') {
             this.valForm.automationParamaterSoilMoisture.setValue(param.value || 0);
+            this.valForm.automationParamaterSoilMoistureEnable.setValue(param.enable || false);
+            if (param.operator === '>=') {
+              this.valForm.automationParamaterSoilMoistureOperation.setValue(true);
+            } else {
+              this.valForm.automationParamaterSoilMoistureOperation.setValue(false);
+            }
           }
         });
       } else if (this.settingType === 2) {
@@ -102,7 +143,14 @@ export class DialogActionSettingComponent implements OnInit {
     return this.dialogForm.controls;
   }
 
+  convertOperator(value: number | boolean): string {
+    return value ? '>=' : '<=';
+  }
+
   onConfirm(): void {
+    if (this.dialogForm.invalid) {
+      return;
+    }
     const dialogRef = this.matDialog.open(DialogConfirmComponent, {
       data: {
         title: 'Save',
@@ -121,16 +169,18 @@ export class DialogActionSettingComponent implements OnInit {
           const parameter: ActionParameter[] = [];
           if (this.valForm.automationParamaterSoilTemperature.value) {
             const preParameter: ActionParameter = {
-              enable: true,
+              enable: this.valForm.automationParamaterSoilTemperatureEnable.value ? true : false,
               sensor: 'soil.temperature',
+              operator: this.convertOperator(Number(this.valForm.automationParamaterSoilTemperatureOperation.value)),
               value: this.valForm.automationParamaterSoilTemperature.value
             };
             parameter.push(preParameter);
           }
           if (this.valForm.automationParamaterSoilMoisture.value) {
             const preParameter: ActionParameter = {
-              enable: true,
+              enable: this.valForm.automationParamaterSoilMoistureEnable.value ? true : false,
               sensor: 'soil.moisture',
+              operator: this.convertOperator(Number(this.valForm.automationParamaterSoilMoistureOperation.value)),
               value: this.valForm.automationParamaterSoilMoisture.value
             };
             parameter.push(preParameter);
@@ -155,6 +205,38 @@ export class DialogActionSettingComponent implements OnInit {
           });
       }
     });
+  }
+
+  ngAfterViewInit(): void {
+    if (this.settingType === 1) {
+      this.switchParameterTemperature = this.valForm.automationParamaterSoilTemperatureEnable.valueChanges.subscribe(res => {
+        const controlForm = this.valForm.automationParamaterSoilTemperature;
+        if (res) {
+          controlForm.setValidators([Validators.required, Validators.min(0), Validators.max(100)]);
+        } else {
+          controlForm.setValidators([Validators.min(0), Validators.max(100)]);
+        }
+        controlForm.updateValueAndValidity();
+      });
+      this.switchParameterMoisture = this.valForm.automationParamaterSoilMoistureEnable.valueChanges.subscribe(res => {
+        const controlForm = this.valForm.automationParamaterSoilMoisture;
+        if (res) {
+          controlForm.setValidators([Validators.required, Validators.min(0), Validators.max(100)]);
+        } else {
+          controlForm.setValidators([Validators.min(0), Validators.max(100)]);
+        }
+        controlForm.updateValueAndValidity();
+      });
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.switchParameterTemperature) {
+      this.switchParameterTemperature.unsubscribe();
+    }
+    if (this.switchParameterMoisture) {
+      this.switchParameterMoisture.unsubscribe();
+    }
   }
 
   ngOnInit(): void {

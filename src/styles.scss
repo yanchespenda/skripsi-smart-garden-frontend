@@ -15,7 +15,7 @@ $skripsi-frontend-theme: mat.define-light-theme((
   )));
 @include mat.all-component-themes($skripsi-frontend-theme);
 
-$skripsi-frontend-primary-dark: mat.define-palette(mat.$blue-palette, A900);
+$skripsi-frontend-primary-dark: mat.define-palette(mat.$blue-palette);
 $skripsi-frontend-accent-dark: mat.define-palette(mat.$pink-palette);
 $skripsi-frontend-warn-dark: mat.define-palette(mat.$red-palette);
 $skripsi-frontend-theme-dark: mat.define-dark-theme((

@@ -154,7 +154,7 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userName = this.oauthService.currentUserValue.username;
+    this.userName = this.oauthService.currentUserValue?.username;
   }
 
 }

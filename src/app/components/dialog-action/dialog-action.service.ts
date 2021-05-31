@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 export class DialogActionService {
 
   private baseURL = environment.baseUrl;
-  private actionURL = `${this.baseURL}api/action/`;
+  public actionURL = `${this.baseURL}api/action/`;
 
   constructor(
     private http: HttpClient,
@@ -32,8 +32,8 @@ export class DialogActionService {
     return this.http.post<UniversalStatusResponse>(this.actionURL + 'setting-' + type, body);
   }
 
-  flushNow(): Observable<Action> {
-    return this.http.post<Action>(this.actionURL + 'flush', {
+  flushNow(): Observable<UniversalStatusResponse> {
+    return this.http.post<UniversalStatusResponse>(this.actionURL + 'flush', {
       value: 1
     });
   }

@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
 export class AppService {
 
   private baseURL = environment.baseUrl;
-  private baseSensorServices = `${this.baseURL}api/sensor`;
+  public baseSensorServices = `${this.baseURL}api/sensor`;
 
   constructor(
     private http: HttpClient,

@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { AppModule } from 'src/app/app.module';
 
 import { DialogMcuTokenComponent } from './dialog-mcu-token.component';
 
@@ -8,7 +10,15 @@ describe('DialogMcuTokenComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DialogMcuTokenComponent ]
+      imports: [
+        AppModule
+      ],
+      declarations: [ DialogMcuTokenComponent ],
+      providers: [{
+        provide: MatDialogRef, useValue: {}
+      }, {
+        provide: MAT_DIALOG_DATA, useValue: {}
+      }]
     })
     .compileComponents();
   });

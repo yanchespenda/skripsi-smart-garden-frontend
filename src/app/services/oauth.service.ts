@@ -11,9 +11,9 @@ import { CookieService } from 'ngx-cookie';
 export class OauthService {
 
   private baseURL = environment.baseUrl;
-  private oauthURL = `${this.baseURL}oauth/`;
+  public oauthURL = `${this.baseURL}oauth/`;
 
-  private currentUserSubject: BehaviorSubject<OauthUser>;
+  public currentUserSubject: BehaviorSubject<OauthUser>;
   public currentUser: Observable<OauthUser>;
   public isValidUser: boolean;
 
@@ -25,7 +25,11 @@ export class OauthService {
     private http: HttpClient,
     private cookieService: CookieService,
   ) {
-    const tempLocal = cookieService.get(this.cookieName);
+    this.checkUser();
+  }
+
+  checkUser(): void {
+    const tempLocal = this.cookieService.get(this.cookieName);
     let tempData: any;
     let isLocalPass = false;
 

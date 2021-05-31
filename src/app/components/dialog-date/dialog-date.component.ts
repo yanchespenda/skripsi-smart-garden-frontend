@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { UniversalSelect } from 'src/app/interfaces';
 
 interface DialogData {
@@ -25,6 +26,7 @@ export class DialogDateComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private matSnackBar: MatSnackBar,
     public dialogRef: MatDialogRef<DialogDateComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {
@@ -32,13 +34,24 @@ export class DialogDateComponent implements OnInit {
     this.dateFormatSelect = data?.dateFormatSelect || [];
   }
 
+  getErrorMessage(control: string): string {
+    if (this.valForm[control].hasError('required')) {
+      return `Field required`;
+    }
+    return ``;
+  }
+
   get valForm(): FormGroup['controls'] {
     return this.actionForm.controls;
   }
 
-  dateFormater(): void {}
-
   onConfirm(): void {
+    if (this.actionForm.invalid) {
+      this.matSnackBar.open('Some field not valid, please check again', 'close', {
+        duration: 3000
+      });
+      return;
+    }
     this.dialogRef.close(this.valForm.currentDate.value);
   }
 

@@ -149,8 +149,16 @@ export class DialogActionSettingComponent implements OnInit, OnDestroy, AfterVie
 
   onConfirm(): void {
     if (this.dialogForm.invalid) {
+      this.matSnackBar.open('Some field not valid, please check again', 'close', {
+        duration: 3000
+      });
       return;
     }
+
+    if (this.isLoading) {
+      return;
+    }
+
     const dialogRef = this.matDialog.open(DialogConfirmComponent, {
       data: {
         title: 'Save',

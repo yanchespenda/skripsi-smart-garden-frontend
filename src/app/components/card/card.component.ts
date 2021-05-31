@@ -33,6 +33,7 @@ import {
   ConnectionService
 } from 'ng-connection-service';
 import { finalize } from 'rxjs/operators';
+import { ChartOptions, LinearScaleOptions } from 'chart.js';
 
 @Component({
   selector: 'app-card',
@@ -43,6 +44,7 @@ export class CardComponent implements OnInit, OnDestroy {
 
   @ViewChild('chartContainer') chartContainer: ChartComponent;
   @Input() cardData: CardData;
+  @Input() isDark: boolean;
 
   isConnected = true;
   isOfflineData = false;
@@ -58,38 +60,85 @@ export class CardComponent implements OnInit, OnDestroy {
     labels: [],
     datasets: []
   };
-  options: any = {
+  options: ChartOptions<any> = {
     responsive: true,
     maintainAspectRatio: false,
     hover: {
       mode: 'nearest',
       intersect: true
     },
+    locale: 'id-ID',
     scales: {
       x: {
         display: true,
         type: 'time',
         offset: true,
+        ticks: {
+          color: '#9E9E9E',
+          font: {
+            family: 'Roboto, "Helvetica Neue", sans-serif'
+          }
+        },
+        borderColor: '#9E9E9E',
+        beginAtZero: true,
+        time: {
+          displayFormats: {
+            minute: 'HH:mm',
+            hour: 'HH:mm',
+            day: 'LLL dd',
+            month: 'LLLL',
+            quarter: 'LLLL yyyy',
+            year: 'yyyy'
+          }
+        }
       },
       y: {
         display: true,
+        ticks: {
+          color: '#9E9E9E',
+          font: {
+            family: 'Roboto, "Helvetica Neue", sans-serif'
+          }
+        },
+        borderColor: '#9E9E9E',
+        beginAtZero: true,
       },
-
-      // xAxes: [{
-      //   type: 'time',
-      // }]
     },
     font: {
       family: 'Roboto, "Helvetica Neue", sans-serif'
-      // color: 'rgba(255, 255, 255, 0.87)'
     },
     plugins: {
       legend: {
-        // color:
+        labels: {
+          color: '#9E9E9E',
+          font: {
+            family: 'Roboto, "Helvetica Neue", sans-serif'
+          }
+        }
       },
       tooltip: {
         mode: 'index',
         intersect: false,
+        titleFont: {
+          family: 'Roboto, "Helvetica Neue", sans-serif'
+        },
+        // callbacks: {
+        //   label: context => {
+        //     console.log('context', context);
+        //     let label = context.dataset.label || null;
+
+        //     if (label) {
+        //       const parse = DateTime.fromISO(label);
+
+        //       console.log('timeLabel', label, parse);
+
+        //       if (parse.isValid) {
+        //         label = parse.setLocale('fr');
+        //       }
+        //     }
+        //     return label;
+        //   }
+        // }
       }
     }
   };
@@ -199,7 +248,10 @@ export class CardComponent implements OnInit, OnDestroy {
   }
 
   initOffline(): void {
-    const getLocalStorage = localStorage.getItem(this.localStorageNameOffline);
+    let getLocalStorage = null;
+    try {
+      getLocalStorage = localStorage.getItem(this.localStorageNameOffline);
+    } catch (error) { }
     if (getLocalStorage) {
       try {
         const parseData = JSON.parse(getLocalStorage);
@@ -223,7 +275,9 @@ export class CardComponent implements OnInit, OnDestroy {
     )
     .subscribe(res => {
       this.manageData(res);
-      localStorage.setItem(this.localStorageNameOffline, JSON.stringify(res).toString());
+      try {
+        localStorage.setItem(this.localStorageNameOffline, JSON.stringify(res).toString());
+      } catch (error) {}
     });
   }
 

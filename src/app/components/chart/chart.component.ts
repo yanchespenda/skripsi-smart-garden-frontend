@@ -20,7 +20,8 @@ import {
   Tooltip,
   Legend,
   TimeScale,
-  ScatterController
+  ScatterController,
+  ChartOptions
 } from 'chart.js';
 import 'chartjs-adapter-luxon';
 
@@ -42,6 +43,8 @@ Chart.register(
   styleUrls: ['./chart.component.scss']
 })
 export class ChartComponent implements OnInit, OnChanges {
+  @Input() isDark: boolean;
+
   chart: any;
 
   @Input() type: any;

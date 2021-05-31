@@ -1,3 +1,4 @@
+import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogActionComponent } from '@component/dialog-action/dialog-action.component';
@@ -16,6 +17,9 @@ import { OauthService } from 'src/app/services/oauth.service';
 export class MainComponent implements OnInit {
 
   isConnected = true;
+  isDark = false;
+  userName: string;
+
 
   cards: GridCardData[] = [{
       title: 'Sensor Udara',
@@ -56,15 +60,43 @@ export class MainComponent implements OnInit {
   ];
 
   constructor(
-    // private breakpointObserver: BreakpointObserver,
     private connectionService: ConnectionService,
     private matDialog: MatDialog,
     private oauthService: OauthService,
+    private overlayContainer: OverlayContainer
   ) {
-    // tslint:disable-next-line: deprecation
     this.connectionService.monitor().subscribe(isConnected => {
       this.isConnected = isConnected;
     });
+
+    try {
+      const mainTheme = localStorage.getItem('mainTheme');
+      if (mainTheme) {
+        if (mainTheme === 'darkThemeMode') {
+          this.changeTheme();
+        }
+      }
+    } catch (error) { }
+  }
+
+  changeTheme(): void {
+    this.isDark = !this.isDark;
+    let theme = 'lightThemeMode';
+    if (this.isDark) {
+      theme = 'darkThemeMode';
+    }
+
+    try {
+      localStorage.setItem('mainTheme', theme);
+    } catch (error) {}
+
+    const overlayContainerClasses = this.overlayContainer.getContainerElement().classList;
+    const themeClassesToRemove = Array.from(overlayContainerClasses)
+      .filter((item: string) => item.includes('ThemeMode'));
+    if (themeClassesToRemove.length) {
+      overlayContainerClasses.remove(...themeClassesToRemove);
+    }
+    overlayContainerClasses.add(theme);
   }
 
   mcuToken(): void {
@@ -74,7 +106,6 @@ export class MainComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // this.oauthService.credentialsDestroy(this.redirectOauth);
       }
     });
   }
@@ -86,7 +117,6 @@ export class MainComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // this.oauthService.credentialsDestroy(this.redirectOauth);
       }
     });
   }
@@ -123,6 +153,8 @@ export class MainComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.userName = this.oauthService.currentUserValue.username;
+  }
 
 }

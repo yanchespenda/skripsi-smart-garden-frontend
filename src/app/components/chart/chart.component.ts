@@ -43,7 +43,7 @@ Chart.register(
   styleUrls: ['./chart.component.scss']
 })
 export class ChartComponent implements OnInit, OnChanges {
-  // @Input() isDark: boolean;
+  @Input() isDark: boolean;
 
   chart: any;
 

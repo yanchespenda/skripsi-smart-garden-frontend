@@ -25,10 +25,6 @@ describe('AppService', () => {
     httpMock = TestBed.inject(HttpTestingController);
   });
 
-  afterEach(async () => {
-    httpMock.verify();
-  });
-
   it('should be created', async () => {
     expect(service).toBeTruthy();
   });

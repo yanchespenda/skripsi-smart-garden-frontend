@@ -1,6 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { BehaviorSubject } from 'rxjs';
+import { AppModule } from '../app.module';
 import { OauthUser } from '../interfaces';
 
 import { OauthService } from './oauth.service';
@@ -12,7 +13,8 @@ describe('OauthService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientTestingModule
+        HttpClientTestingModule,
+        AppModule
       ],
       providers: [
         OauthService
@@ -23,10 +25,6 @@ describe('OauthService', () => {
 
     service.isValidUser = true;
     service.currentUserSubject = new BehaviorSubject<OauthUser>({username: '', accessToken: ''});
-  });
-
-  afterEach(async () => {
-    httpMock.verify();
   });
 
   it('should error if an Authorization header empty or invalid', () => {

@@ -21,10 +21,6 @@ describe('DialogActionService', () => {
     httpMock = TestBed.inject(HttpTestingController);
   });
 
-  afterEach(async () => {
-    httpMock.verify();
-  });
-
   it('should be created', () => {
     expect(service).toBeTruthy();
   });

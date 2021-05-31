@@ -1,5 +1,7 @@
 # SkripsiFrontend
 
+[![Build Status](https://travis-ci.com/yanchespenda/skripsi-smart-garden-frontend.svg?token=Lsju7pD5QEBSqZS9q5R5&branch=main)](https://travis-ci.com/yanchespenda/skripsi-smart-garden-frontend)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.3.
 
 ## Development server

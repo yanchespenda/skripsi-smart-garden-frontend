@@ -3,7 +3,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { OauthService } from 'src/app/services/oauth.service';
-import { Clipboard } from "@angular/cdk/clipboard";
+import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-dialog-mcu-token',

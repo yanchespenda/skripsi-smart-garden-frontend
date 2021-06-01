@@ -29,7 +29,7 @@ before_install:
 script:
   - yarn install
   - yarn run lint
-  # - yarn run test -- --watch=false
+  - yarn run test -- --watch=false
   # - yarn run pree2e
   # - yarn run e2e
 # cache: yarn

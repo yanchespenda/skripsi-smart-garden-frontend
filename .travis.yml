@@ -1,14 +1,14 @@
 dist: trusty
 language: node_js
 node_js:
-  - "16"
+  - "14"
 os:
   - linux
-# env:
-  # global:
-    # - DBUS_SESSION_BUS_ADDRESS=/dev/null
-    # - DISPLAY=:99.0
-    # - CHROME_BIN=chromium-browser
+env:
+  global:
+    - DBUS_SESSION_BUS_ADDRESS=/dev/null
+    - DISPLAY=:99.0
+    - CHROME_BIN=chromium-browser
 before_install:
   - npm install -g yarn
 # before_script:
@@ -21,7 +21,7 @@ before_install:
   # - sudo apt-get update -qq
   # - sudo apt-get install -y -qq yarn=1.22.5-1
   # Other
-  # - sh -e /etc/init.d/xvfb start
+  - sh -e /etc/init.d/xvfb start
 # cache:
 #   yarn: true
 # install:

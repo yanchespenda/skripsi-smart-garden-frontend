@@ -20,10 +20,10 @@ before_script:
   # - sudo apt-get install -y -qq yarn=1.22.5-1
   # Other
   # - sh -e /etc/init.d/xvfb start
-cache:
-  yarn: true
-install:
-  - yarn
+# cache:
+#   yarn: true
+# install:
+#   - yarn
 script:
   - yarn install
   - yarn run lint

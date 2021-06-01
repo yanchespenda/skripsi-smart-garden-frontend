@@ -4,11 +4,11 @@ node_js:
   - "14"
 os:
   - linux
-env:
-  global:
-    - DBUS_SESSION_BUS_ADDRESS=/dev/null
-    - DISPLAY=:99.0
-    - CHROME_BIN=chromium-browser
+# env:
+  # global:
+    # - DBUS_SESSION_BUS_ADDRESS=/dev/null
+    # - DISPLAY=:99.0
+    # - CHROME_BIN=chromium-browser
 before_script:
   # yarn
   - curl -o- -L https://yarnpkg.com/install.sh | bash
@@ -19,7 +19,7 @@ before_script:
   # - sudo apt-get update -qq
   # - sudo apt-get install -y -qq yarn=1.22.5-1
   # Other
-  - sh -e /etc/init.d/xvfb start
+  # - sh -e /etc/init.d/xvfb start
 cache:
   yarn: true
 install:
@@ -27,7 +27,7 @@ install:
 script:
   - yarn install
   - yarn run lint
-  - yarn run test -- --watch=false
+  # - yarn run test -- --watch=false
   # - yarn run pree2e
   # - yarn run e2e
 # cache: yarn

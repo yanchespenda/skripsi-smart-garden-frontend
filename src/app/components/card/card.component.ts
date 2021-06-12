@@ -269,6 +269,7 @@ export class CardComponent implements OnInit, OnDestroy {
       return;
     }
     this.isLoading = true;
+    this.isOfflineData = false;
     this.appService.getSensor(this.cardData.idService, this.currentDate)
     .pipe(
       finalize(() => this.isLoading = false)

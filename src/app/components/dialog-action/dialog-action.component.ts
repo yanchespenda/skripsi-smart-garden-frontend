@@ -88,8 +88,6 @@ export class DialogActionComponent implements OnInit {
     });
   }
 
-  onConfirm(): void {}
-
   onFlushNow(): void {
     const dialogRef = this.matDialog.open(DialogConfirmComponent, {
       data: {

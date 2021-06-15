@@ -67,6 +67,6 @@
   </mat-list>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onConfirm()">Close</button>
+  <button mat-button mat-dialog-close>Close</button>
   <button mat-button [disabled]="isLoading" (click)="onFlushNow()">Flush Now</button>
 </div>

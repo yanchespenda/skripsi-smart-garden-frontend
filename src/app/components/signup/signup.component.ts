@@ -61,6 +61,8 @@ export class SignupComponent implements OnInit {
       this.errorMSGB = 'Please input your password';
     } else if (this.valA.password.hasError('minlength')) {
       this.errorMSGB = 'Password to short';
+    } else if (this.valA.password.hasError('maxlength')) {
+      this.errorMSGB = 'Password to long';
     }
     return this.errorMSGB;
   }

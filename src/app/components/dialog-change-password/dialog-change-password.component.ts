@@ -32,7 +32,7 @@ export class DialogChangePasswordComponent implements OnInit {
       '', [Validators.required]
     ],
     newPassword: [
-      '', [Validators.required]
+      '', [Validators.required, Validators.minLength(6), Validators.maxLength(15)]
     ],
     confirmPassword: [
       '', [Validators.required, matchValues('newPassword')]
@@ -52,6 +52,10 @@ export class DialogChangePasswordComponent implements OnInit {
       return `Field required`;
     } else if (this.valForm[control].hasError('isMatching')) {
       return `Confirm password does not match`;
+    } else if (this.valForm[control].hasError('minlength')) {
+      return `Password to short`;
+    } else if (this.valForm[control].hasError('maxlength')) {
+      return `Password to long`;
     }
     return ``;
   }

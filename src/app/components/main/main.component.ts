@@ -124,8 +124,8 @@ export class MainComponent implements OnInit {
   signOut(): void {
     const dialogRef = this.matDialog.open(DialogConfirmComponent, {
       data: {
-        title: 'Signout',
-        content: 'Are you sure want signout?'
+        title: 'Logout',
+        content: 'Are you sure want logout?'
       },
       maxWidth: '400px',
       width: '100%'

@@ -20,6 +20,14 @@
       <mat-icon>password</mat-icon>
       <span>Change password</span>
     </button>
+    <button mat-menu-item aria-label="Reset data" (click)="notification()">
+      <mat-icon>notifications</mat-icon>
+      <span>Notification</span>
+    </button>
+    <button mat-menu-item aria-label="Reset data" (click)="resetData()">
+      <mat-icon>restart_alt</mat-icon>
+      <span>Reset data</span>
+    </button>
     <button mat-menu-item aria-label="Change Password" (click)="changeTheme()">
       <mat-icon>dark_mode</mat-icon>
       <span>Set {{ isDark ? 'light' : 'dark'}} mode</span>

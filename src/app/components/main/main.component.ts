@@ -5,6 +5,7 @@ import { DialogActionComponent } from '@component/dialog-action/dialog-action.co
 import { DialogChangePasswordComponent } from '@component/dialog-change-password/dialog-change-password.component';
 import { DialogConfirmComponent } from '@component/dialog-confirm/dialog-confirm.component';
 import { DialogMcuTokenComponent } from '@component/dialog-mcu-token/dialog-mcu-token.component';
+import { DialogNotificationsComponent } from '@component/dialog-notifications/dialog-notifications.component';
 import { ConnectionService } from 'ng-connection-service';
 import { GridCardData } from 'src/app/interfaces';
 import { OauthService } from 'src/app/services/oauth.service';
@@ -63,7 +64,7 @@ export class MainComponent implements OnInit {
     private connectionService: ConnectionService,
     private matDialog: MatDialog,
     private oauthService: OauthService,
-    private overlayContainer: OverlayContainer
+    private overlayContainer: OverlayContainer,
   ) {
     this.connectionService.monitor().subscribe(isConnected => {
       this.isConnected = isConnected;
@@ -133,6 +134,37 @@ export class MainComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.oauthService.credentialsDestroy(this.redirectOauth);
+      }
+    });
+  }
+
+  resetData(): void {
+    const dialogRef = this.matDialog.open(DialogConfirmComponent, {
+      data: {
+        title: 'Reset Data',
+        content: 'Data will lost permanently, are you sure?',
+        isVerify: true,
+        verifyText: 'RESET'
+      },
+      maxWidth: '400px',
+      width: '100%'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.oauthService.resetData();
+      }
+    });
+  }
+
+  notification(): void {
+    const dialogRef = this.matDialog.open(DialogNotificationsComponent, {
+      data: {
+      },
+      maxWidth: '400px',
+      width: '100%'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
       }
     });
   }

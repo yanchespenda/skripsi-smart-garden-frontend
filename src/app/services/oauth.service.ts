@@ -2,7 +2,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { OauthChangePassword, OauthMcuToken, OauthStatus, OauthUser, SigninResponse, SignupResponse } from '../interfaces';
+import { OauthChangePassword, OauthMcuToken,
+  OauthStatus, OauthUser,
+  SigninResponse, SignupResponse } from '../interfaces';
 import { CookieService } from 'ngx-cookie';
 
 @Injectable({
@@ -28,6 +30,9 @@ export class OauthService {
     this.checkUser();
   }
 
+  /**
+   * Check current user
+   */
   checkUser(): void {
     const tempLocal = this.cookieService.get(this.cookieName);
     let tempData: any;
@@ -53,6 +58,11 @@ export class OauthService {
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
+  /**
+   * Current active user
+   *
+   * @return OauthUser
+   */
   public get currentUserValue(): OauthUser {
     if (!this.isValidUser) {
       return null;
@@ -126,5 +136,9 @@ export class OauthService {
                   .set('passwordConfirm', passwordConfirm)
                   .set('passwordNew', passwordNew);
     return this.http.post<OauthStatus>(this.oauthURL + 'change-password', dataParams);
+  }
+
+  resetData(): Observable<OauthStatus> {
+    return this.http.post<OauthStatus>(this.oauthURL + 'reset-data', null);
   }
 }

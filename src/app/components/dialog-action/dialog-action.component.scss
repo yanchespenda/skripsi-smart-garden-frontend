@@ -1,3 +1,13 @@
+.dialogTitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  h1 {
+    margin: 0;
+  }
+}
+
 .dialogContent {
   margin-bottom: 16px;;
 }

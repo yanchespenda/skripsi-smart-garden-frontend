@@ -37,7 +37,9 @@ import { CardComponent } from './components/card/card.component';
 import { DialogDateComponent } from './components/dialog-date/dialog-date.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { HttpInterceptorsService } from './services/http-interceptors.service';
-
+import { AngularTelegramLoginWidgetModule } from 'angular-telegram-login-widget';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireMessagingModule, VAPID_KEY } from '@angular/fire/messaging';
 
 
 import { ConnectionServiceModule } from 'ng-connection-service';
@@ -49,6 +51,7 @@ import { DialogChangePasswordComponent } from './components/dialog-change-passwo
 import { DialogActionComponent } from './components/dialog-action/dialog-action.component';
 import { DialogActionSettingComponent } from './components/dialog-action-setting/dialog-action-setting.component';
 import { DialogActionHistoryComponent } from './components/dialog-action-history/dialog-action-history.component';
+import { DialogNotificationsComponent } from './components/dialog-notifications/dialog-notifications.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +68,7 @@ import { DialogActionHistoryComponent } from './components/dialog-action-history
     DialogActionComponent,
     DialogActionSettingComponent,
     DialogActionHistoryComponent,
+    DialogNotificationsComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,6 +82,9 @@ import { DialogActionHistoryComponent } from './components/dialog-action-history
     ConnectionServiceModule,
     CookieModule.forRoot(),
     ClipboardModule,
+    AngularTelegramLoginWidgetModule,
+    AngularFireModule.initializeApp(environment.FIREBASE_CONFIG),
+    AngularFireMessagingModule,
 
     MatToolbarModule,
     MatIconModule,
@@ -112,6 +119,7 @@ import { DialogActionHistoryComponent } from './components/dialog-action-history
       useClass: HttpInterceptorsService,
       multi: true,
     },
+    { provide: VAPID_KEY, useValue: environment.FIREBASE_VAPID },
   ],
   bootstrap: [AppComponent]
 })

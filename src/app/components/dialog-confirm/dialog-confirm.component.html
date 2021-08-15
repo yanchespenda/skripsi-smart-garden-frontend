@@ -1,5 +1,18 @@
 <h1 mat-dialog-title>{{ title }}</h1>
-<div mat-dialog-content class="dialogContent">{{ content }}</div>
+<div mat-dialog-content class="dialogContent">
+  {{ content }}
+
+  <ng-container *ngIf="isVerify">
+    <form [formGroup]="actionForm">
+      <div>
+        <mat-form-field class="fullSize inputMargin" appearance="outline">
+          <mat-label>Verify Text `{{ verifyText }}`</mat-label>
+          <input #inputVerify formControlName="verifyText" matInput value="" autocomplete="off">
+        </mat-form-field>
+      </div>
+    </form>
+  </ng-container>
+</div>
 <div mat-dialog-actions>
   <button mat-button mat-dialog-close>Cancel</button>
   <button mat-button (click)="onConfirm()">Yes</button>

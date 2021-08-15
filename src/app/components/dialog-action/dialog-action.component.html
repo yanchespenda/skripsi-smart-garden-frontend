@@ -1,4 +1,9 @@
-<h1 mat-dialog-title>Watering {{ action?.lastAction ? '[Latest action: ' + action.lastAction + ']' : ''}}</h1>
+<div mat-dialog-title class="dialogTitle">
+  <h1>Watering {{ action?.lastAction ? '[Latest action: ' + action.lastAction + ']' : ''}}</h1>
+  <div fxFlex></div>
+  <button mat-button mat-dialog-close><mat-icon>cancel</mat-icon></button>
+</div>
+<!-- <button mat-button mat-dialog-close>Close</button> -->
 <div class="universalLoaderContainer">
   <mat-progress-bar 
     *ngIf="isLoading"
@@ -65,8 +70,9 @@
       <div mat-line>{{ item.action || '-' }} • {{ item.from || '-' }}</div>
     </mat-list-item>
   </mat-list>
-</div>
-<div mat-dialog-actions>
-  <button mat-button mat-dialog-close>Close</button>
-  <button mat-button [disabled]="isLoading" (click)="onFlushNow()">Flush Now</button>
+  <mat-divider></mat-divider>
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <h3 class="titleNoMargin">Manual Flush</h3>
+    <button mat-button [disabled]="isLoading" (click)="onFlushNow()">Flush Now</button>
+  </div>
 </div>

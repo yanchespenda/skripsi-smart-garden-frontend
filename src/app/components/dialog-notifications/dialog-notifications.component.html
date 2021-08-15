@@ -1,0 +1,61 @@
+<div mat-dialog-title class="dialogTitle">
+  <h1>Notifications</h1>
+  <div fxFlex></div>
+  <button mat-button mat-dialog-close><mat-icon>cancel</mat-icon></button>
+</div>
+<div mat-dialog-content class="dialogContent">
+  <form [formGroup]="dialogForm">
+
+    <div class="formPadding">
+      <div class="fullSize inputMargin">
+        <mat-slide-toggle color="primary" formControlName="emailEnable" aria-label="Enable with email">
+          Enable with email
+        </mat-slide-toggle>
+      </div>
+
+      <mat-form-field class="fullSize inputMargin" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input formControlName="email" matInput type="email" value="" autocomplete="off">
+        <mat-error *ngIf="dialogForm.invalid">{{ getErrorMessage('email') }}</mat-error>
+      </mat-form-field>
+
+      <div class="fullSize inputMargin">
+        <mat-slide-toggle color="primary" formControlName="telegramEnable" aria-label="Enable with telegram">
+          Enable with telegram
+        </mat-slide-toggle>
+      </div>
+
+      <ng-container *ngIf="userOutput">
+        <div fxLayout="column">
+          <span>ID: {{ userOutput?.id }}</span>
+          <span>Username: {{ userOutput?.username || userOutput?.first_name }}</span>
+        </div>
+      </ng-container>
+
+      <!-- Telegram -->
+      <angular-telegram-login-widget
+        (load)="onTelegramLoad()"
+        (loadError)="onTelegramLoadError()"
+        (login)="onTelegramLogin($event)"
+        [botName]="telegramBotName"
+        [config]="telegramConfigs"></angular-telegram-login-widget>
+      <!-- End Telegram -->
+
+      <div class="fullSize inputMargin">
+        <mat-slide-toggle color="primary" (ngModelChange)="webPushNotificationModelHandler($event)" formControlName="webPushEnable" aria-label="Enable with web push notification">
+          Enable with web push notification
+        </mat-slide-toggle>
+      </div>
+
+      <mat-form-field class="fullSize inputMargin" appearance="outline">
+        <mat-label>Web Token</mat-label>
+        <input formControlName="webPush" readonly aria-readonly="true" matInput type="text" value="" autocomplete="off">
+      </mat-form-field>
+    </div>
+
+  </form>
+
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <button mat-button (click)="onConfirm()">Save</button>
+  </div>
+</div>

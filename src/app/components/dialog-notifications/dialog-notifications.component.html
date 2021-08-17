@@ -1,7 +1,7 @@
 <div mat-dialog-title class="dialogTitle">
   <h1>Notifications</h1>
   <div fxFlex></div>
-  <button mat-button mat-dialog-close><mat-icon>cancel</mat-icon></button>
+  <button mat-icon-button mat-dialog-close><mat-icon>cancel</mat-icon></button>
 </div>
 <div mat-dialog-content class="dialogContent">
   <form [formGroup]="dialogForm">
@@ -46,11 +46,7 @@
           Enable with web push notification
         </mat-slide-toggle>
       </div>
-
-      <mat-form-field class="fullSize inputMargin" appearance="outline">
-        <mat-label>Web Token</mat-label>
-        <input formControlName="webPush" readonly aria-readonly="true" matInput type="text" value="" autocomplete="off">
-      </mat-form-field>
+      <span class="md-caption">*Make sure you allowed notification permission from your browser</span>
     </div>
 
   </form>

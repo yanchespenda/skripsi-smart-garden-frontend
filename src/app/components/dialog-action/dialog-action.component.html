@@ -1,11 +1,11 @@
 <div mat-dialog-title class="dialogTitle">
   <h1>Watering {{ action?.lastAction ? '[Latest action: ' + action.lastAction + ']' : ''}}</h1>
   <div fxFlex></div>
-  <button mat-button mat-dialog-close><mat-icon>cancel</mat-icon></button>
+  <button mat-icon-button mat-dialog-close><mat-icon>cancel</mat-icon></button>
 </div>
 <!-- <button mat-button mat-dialog-close>Close</button> -->
 <div class="universalLoaderContainer">
-  <mat-progress-bar 
+  <mat-progress-bar
     *ngIf="isLoading"
     class="loaderProgressBar"
     color="primary" mode="indeterminate">

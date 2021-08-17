@@ -49,6 +49,7 @@ export class DialogConfirmComponent implements OnInit {
   onConfirm(): void {
     if (!this.isVerify) {
       this.dialogRef.close(true);
+      return;
     }
 
     if (!this.actionForm.valid) {
@@ -60,13 +61,13 @@ export class DialogConfirmComponent implements OnInit {
 
     if (this.valForm.verifyText.value === this.verifyText) {
       this.dialogRef.close(true);
+      return;
     } else {
       this.matSnackBar.open('Verify not same', 'close', {
         duration: 3000
       });
       return;
     }
-    this.dialogRef.close(false);
   }
 
   ngOnInit(): void {

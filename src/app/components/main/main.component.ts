@@ -1,6 +1,8 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { DialogActionComponent } from '@component/dialog-action/dialog-action.component';
 import { DialogChangePasswordComponent } from '@component/dialog-change-password/dialog-change-password.component';
 import { DialogConfirmComponent } from '@component/dialog-confirm/dialog-confirm.component';
@@ -65,6 +67,7 @@ export class MainComponent implements OnInit {
     private matDialog: MatDialog,
     private oauthService: OauthService,
     private overlayContainer: OverlayContainer,
+    private matSnackBar: MatSnackBar,
   ) {
     this.connectionService.monitor().subscribe(isConnected => {
       this.isConnected = isConnected;
@@ -144,14 +147,26 @@ export class MainComponent implements OnInit {
         title: 'Reset Data',
         content: 'Data will lost permanently, are you sure?',
         isVerify: true,
-        verifyText: 'RESET'
+        verifyText: 'RESET',
       },
       maxWidth: '400px',
       width: '100%'
     });
     dialogRef.afterClosed().subscribe(result => {
+      console.log('result', result);
       if (result) {
-        this.oauthService.resetData();
+        this.oauthService.resetData()
+          .subscribe(res => {
+            this.matSnackBar.open(res.message || 'Success', 'close', {
+              duration: 3000
+            });
+          },
+          (err: HttpErrorResponse) => {
+            console.error('err', err);
+            this.matSnackBar.open('Something went wrong', 'close', {
+              duration: 3000
+            });
+          });
       }
     });
   }

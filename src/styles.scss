@@ -224,5 +224,9 @@ body {
 
 .mainComponent {
   margin-top: 64px;
+
+  @media (max-width: 599px) {
+    margin-top: 56px;
+  }
 }
 
